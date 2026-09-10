@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <title>Create Merchant Account - ZiniPay Payment Automation</title>
+    <title>Create Merchant Account - ElitePay Payment Automation</title>
     <link rel="shortcut icon" href="assets/images/elitepay-favicon.svg" type="image/svg+xml"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,13 +31,13 @@
         }
     </script>
     <style>
-        .btn-zini-gradient {
+        .btn-elite-gradient, .btn-zini-gradient {
             background: linear-gradient(90deg, #007aff 0%, #5bc0ff 50%, #007aff 100%);
             background-size: 200% auto;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 8px 25px rgba(0, 122, 255, 0.3);
         }
-        .btn-zini-gradient:hover {
+        .btn-elite-gradient:hover, .btn-zini-gradient:hover {
             background-position: right center;
             box-shadow: 0 12px 30px rgba(0, 122, 255, 0.45);
             transform: translateY(-1px);
@@ -55,15 +55,20 @@
                         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
                     </svg>
                 </span>
-                <span class="text-2xl font-extrabold tracking-tight text-sky-600">ZiniPay</span>
+                <span class="text-2xl font-extrabold tracking-tight text-sky-600">ElitePay</span>
             </a>
             <p class="text-xs text-slate-500 mt-1">Start Accepting Online Payments Automatically</p>
         </div>
 
         <!-- Register Card -->
         <div class="bg-white rounded-3xl border border-slate-200/80 p-8 shadow-xl shadow-sky-950/5">
-            <h2 class="text-2xl font-bold text-slate-900 text-center mb-2">Create Customer / Merchant Account</h2>
-            <p class="text-xs text-slate-500 text-center mb-6">Automate bKash, Nagad, Rocket & Upay on personal or merchant numbers</p>
+            <div class="flex items-center justify-between mb-2">
+                <h2 class="text-2xl font-bold text-slate-900">Create Merchant Account</h2>
+                <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-200">
+                    🎁 3-Day Free Trial
+                </span>
+            </div>
+            <p class="text-xs text-slate-500 mb-6">Automate personal bKash, Nagad, Rocket & Upay verification with 0% transaction fees.</p>
 
             <form action="#" method="POST" id="regForm" class="space-y-4 text-xs">
                 <div>
@@ -73,7 +78,7 @@
 
                 <div>
                     <label class="font-bold text-slate-700 block mb-1.5">Business or Store Name</label>
-                    <input type="text" id="regStoreName" placeholder="e.g. Tanvir Shop" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
+                    <input type="text" id="regStoreName" placeholder="e.g. Tanvir Tech & Gadgets" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -82,8 +87,8 @@
                         <input type="text" id="regUsername" placeholder="tanvir99" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
                     </div>
                     <div>
-                        <label class="font-bold text-slate-700 block mb-1.5">Email Address</label>
-                        <input type="email" id="regEmail" placeholder="tanvir@shop.com" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
+                        <label class="font-bold text-slate-700 block mb-1.5">Gmail / Email Address</label>
+                        <input type="email" id="regEmail" placeholder="tanvir@gmail.com" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
                     </div>
                 </div>
 
@@ -100,12 +105,12 @@
 
                 <div class="flex items-center gap-2 pt-1">
                     <input type="checkbox" id="agreeTerms" checked required class="rounded border-slate-300 text-sky-600 focus:ring-sky-500 h-4 w-4"/>
-                    <label for="agreeTerms" class="text-slate-600 font-medium">I agree to the <a href="./#pricing" class="text-sky-600 underline">Terms of Service</a> & 0% transaction fee guarantee.</label>
+                    <label for="agreeTerms" class="text-slate-600 font-medium">I agree to the <a href="./#pricing" class="text-sky-600 underline">Terms of Service</a> & 3-Day Free Trial policy.</label>
                 </div>
 
                 <div class="pt-3">
-                    <button type="submit" class="w-full btn-zini-gradient rounded-xl py-3.5 text-sm font-bold text-white shadow-md cursor-pointer">
-                        Create Account & Launch Panel &rarr;
+                    <button type="submit" class="w-full btn-elite-gradient rounded-xl py-3.5 text-sm font-bold text-white shadow-md cursor-pointer">
+                        Start 3-Day Free Trial & Launch Panel &rarr;
                     </button>
                 </div>
             </form>
@@ -113,21 +118,71 @@
 
         <div class="text-center text-xs text-slate-500 mt-6 space-y-2">
             <p>Already have an account? <a href="login.html" class="text-sky-600 font-bold hover:underline">Sign in here</a></p>
-            <p><a href="./" class="text-slate-400 hover:text-slate-600 transition">&larr; Back to ZiniPay Home</a></p>
+            <p><a href="./" class="text-slate-400 hover:text-slate-600 transition">&larr; Back to ElitePay Home</a></p>
         </div>
     </div>
 
     <script>
         document.getElementById('regForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const storeName = document.getElementById('regStoreName').value;
-            const ownerName = document.getElementById('regFullName').value;
-            const email = document.getElementById('regEmail').value;
+            const storeName = document.getElementById('regStoreName').value.trim();
+            const ownerName = document.getElementById('regFullName').value.trim();
+            const email = document.getElementById('regEmail').value.trim().toLowerCase();
 
-            sessionStorage.setItem('zinipay_user_role', 'customer');
-            sessionStorage.setItem('zinipay_customer_key', 'tanvir');
+            let accounts = {};
+            try {
+                accounts = JSON.parse(localStorage.getItem('elitepay_accounts')) || {};
+            } catch(err) {
+                accounts = {};
+            }
+
+            const now = Date.now();
+            const trialEndsAt = now + (3 * 24 * 60 * 60 * 1000);
+
+            accounts[email] = {
+                email: email,
+                storeName: storeName || (ownerName + " Store"),
+                ownerName: ownerName || "Merchant",
+                plan: "3-Day Free Trial",
+                planType: "trial",
+                isTrial: true,
+                trialEndsAt: trialEndsAt,
+                createdAt: now,
+                todaySales: "৳ 0.00",
+                totalSales: "৳ 0.00",
+                orderCount: 0,
+                bkash: "01700-000000",
+                nagad: "01800-000000",
+                deviceName: "Android Companion (Ready)",
+                deviceToken: "elite_dev_" + Math.random().toString(36).substring(2, 9),
+                merchantId: "ELITE-" + Math.floor(100000 + Math.random() * 900000),
+                apiKey: "sk_live_" + Math.random().toString(36).substring(2, 14),
+                webhookUrl: "https://" + email.split('@')[0] + ".com/api/payment-webhook",
+                transactions: [
+                    {
+                        id: "BK" + Math.floor(10000000 + Math.random() * 90000000) + "X",
+                        invoice: "INV-101",
+                        gateway: "bKash",
+                        phone: "01755-123***",
+                        amount: "৳ 500.00",
+                        status: "Verified",
+                        time: "Trial Initialized"
+                    }
+                ],
+                links: [
+                    {
+                        title: "My First Payment Link",
+                        amount: 350,
+                        url: "https://piprapayxjojo.vercel.app/pay/my-item"
+                    }
+                ]
+            };
+
+            localStorage.setItem('elitepay_accounts', JSON.stringify(accounts));
+            sessionStorage.setItem('elitepay_user_role', 'customer');
+            sessionStorage.setItem('elitepay_current_user', email);
             
-            alert(`Account created for ${storeName}!\n\nWelcome ${ownerName}. Redirecting directly to your personal merchant dashboard...`);
+            alert(`🎉 Congratulations ${ownerName}!\n\nYour 3-Day Free Trial for "${storeName}" is now active. Opening your merchant dashboard...`);
             window.location.href = 'customer-panel.html';
         });
     </script>

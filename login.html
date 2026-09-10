@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <title>Login - ZiniPay Payment Automation</title>
+    <title>Login - ElitePay Payment Automation</title>
     <link rel="shortcut icon" href="assets/images/elitepay-favicon.svg" type="image/svg+xml"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,13 +31,13 @@
         }
     </script>
     <style>
-        .btn-zini-gradient {
+        .btn-elite-gradient, .btn-zini-gradient {
             background: linear-gradient(90deg, #007aff 0%, #5bc0ff 50%, #007aff 100%);
             background-size: 200% auto;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 8px 25px rgba(0, 122, 255, 0.3);
         }
-        .btn-zini-gradient:hover {
+        .btn-elite-gradient:hover, .btn-zini-gradient:hover {
             background-position: right center;
             box-shadow: 0 12px 30px rgba(0, 122, 255, 0.45);
             transform: translateY(-1px);
@@ -55,65 +55,20 @@
                         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
                     </svg>
                 </span>
-                <span class="text-2xl font-extrabold tracking-tight text-sky-600">ZiniPay</span>
+                <span class="text-2xl font-extrabold tracking-tight text-sky-600">ElitePay</span>
             </a>
             <p class="text-xs text-slate-500 mt-1">Smart Payment Automation Portal</p>
         </div>
 
-        <!-- 1-Click Fast Role Switcher Box -->
-        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 mb-5 text-white shadow-xl">
-            <div class="text-xs font-bold text-slate-300 mb-2 flex items-center justify-between">
-                <span>⚡ 1-Click Test Login Accounts:</span>
-                <span class="text-[10px] text-emerald-400 font-mono">Isolated Panels</span>
-            </div>
-            <div class="space-y-2 text-xs">
-                <!-- 1. Admin Owner -->
-                <button type="button" onclick="quickLogin('admin')" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 font-bold transition cursor-pointer text-left">
-                    <div class="flex items-center gap-2">
-                        <span class="text-base">👑</span>
-                        <div>
-                            <div>Platform Owner (Admin)</div>
-                            <div class="text-[10px] text-amber-400/70 font-mono">admin@zinipay.com</div>
-                        </div>
-                    </div>
-                    <span class="text-[11px] bg-amber-500 text-slate-950 px-2 py-0.5 rounded font-extrabold">&rarr; Admin Panel</span>
-                </button>
-
-                <!-- 2. Customer 1 (Tanvir Shop) -->
-                <button type="button" onclick="quickLogin('tanvir')" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 border border-sky-500/30 text-sky-300 font-bold transition cursor-pointer text-left">
-                    <div class="flex items-center gap-2">
-                        <span class="text-base">👤</span>
-                        <div>
-                            <div>Customer 1 (Tanvir Shop)</div>
-                            <div class="text-[10px] text-sky-400/70 font-mono">tanvir@shop.com</div>
-                        </div>
-                    </div>
-                    <span class="text-[11px] bg-sky-500 text-white px-2 py-0.5 rounded font-extrabold">&rarr; Shop Panel</span>
-                </button>
-
-                <!-- 3. Customer 2 (Ayesha Boutique) -->
-                <button type="button" onclick="quickLogin('ayesha')" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-300 font-bold transition cursor-pointer text-left">
-                    <div class="flex items-center gap-2">
-                        <span class="text-base">👗</span>
-                        <div>
-                            <div>Customer 2 (Ayesha Boutique)</div>
-                            <div class="text-[10px] text-purple-400/70 font-mono">ayesha@boutique.com</div>
-                        </div>
-                    </div>
-                    <span class="text-[11px] bg-purple-500 text-white px-2 py-0.5 rounded font-extrabold">&rarr; Boutique Panel</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Standard Login Card -->
+        <!-- Login Card -->
         <div class="bg-white rounded-3xl border border-slate-200/80 p-8 shadow-xl shadow-sky-950/5">
-            <h2 class="text-2xl font-bold text-slate-900 text-center mb-2">Sign In to Your Account</h2>
-            <p class="text-xs text-slate-500 text-center mb-6">Enter your email and password to open your panel</p>
+            <h2 class="text-2xl font-bold text-slate-900 text-center mb-1.5">Sign In to Your Account</h2>
+            <p class="text-xs text-slate-500 text-center mb-6">Enter your Gmail or Email to open your merchant panel</p>
 
             <form action="#" method="POST" id="loginForm" class="space-y-4 text-xs">
                 <div>
-                    <label class="font-bold text-slate-700 block mb-1.5">Email Address</label>
-                    <input type="text" id="inputUsername" name="username" value="admin@zinipay.com" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
+                    <label class="font-bold text-slate-700 block mb-1.5">Gmail or Email Address</label>
+                    <input type="email" id="inputUsername" name="username" placeholder="e.g. yourname@gmail.com" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
                 </div>
 
                 <div>
@@ -121,7 +76,7 @@
                         <label class="font-bold text-slate-700">Password</label>
                         <a href="#" class="text-sky-600 hover:underline">Forgot password?</a>
                     </div>
-                    <input type="password" id="inputPassword" name="password" value="12345678" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
+                    <input type="password" id="inputPassword" name="password" placeholder="Enter your password" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
                 </div>
 
                 <div class="flex items-center gap-2 pt-1">
@@ -130,48 +85,101 @@
                 </div>
 
                 <div class="pt-3">
-                    <button type="submit" class="w-full btn-zini-gradient rounded-xl py-3.5 text-sm font-bold text-white shadow-md cursor-pointer">
+                    <button type="submit" class="w-full btn-elite-gradient rounded-xl py-3.5 text-sm font-bold text-white shadow-md cursor-pointer">
                         Sign In &rarr;
                     </button>
                 </div>
             </form>
+
+            <div class="mt-4 p-3 rounded-xl bg-sky-50/70 border border-sky-100 text-[11px] text-sky-900 flex items-start gap-2">
+                <span class="text-sm">🎁</span>
+                <div>
+                    <span class="font-bold">First time signing in?</span>
+                    <p class="text-slate-600 mt-0.5">Any Gmail entered automatically receives a <span class="font-bold text-sky-700">3-Day Free Trial</span> with full access to automated personal bKash/Nagad verification!</p>
+                </div>
+            </div>
         </div>
 
         <div class="text-center text-xs text-slate-500 mt-6 space-y-2">
             <p>Don't have an account yet? <a href="register.html" class="text-sky-600 font-bold hover:underline">Create Merchant Account</a></p>
-            <p><a href="./" class="text-slate-400 hover:text-slate-600 transition">&larr; Back to ZiniPay Home</a></p>
+            <p><a href="./" class="text-slate-400 hover:text-slate-600 transition">&larr; Back to ElitePay Home</a></p>
         </div>
     </div>
 
     <script>
-        // 1-Click Quick Login
-        function quickLogin(type) {
-            if (type === 'admin') {
-                sessionStorage.setItem('zinipay_user_role', 'admin');
-                window.location.href = 'admin-panel.html';
-            } else if (type === 'tanvir') {
-                sessionStorage.setItem('zinipay_user_role', 'customer');
-                sessionStorage.setItem('zinipay_customer_key', 'tanvir');
-                window.location.href = 'customer-panel.html';
-            } else if (type === 'ayesha') {
-                sessionStorage.setItem('zinipay_user_role', 'customer');
-                sessionStorage.setItem('zinipay_customer_key', 'ayesha');
-                window.location.href = 'customer-panel.html';
-            }
-        }
-
-        // Form Submit Handler
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const email = document.getElementById('inputUsername').value.trim().toLowerCase();
+            if (!email) return;
 
+            // Check if Superadmin / Platform Owner
             if (email.includes('admin') || email.includes('owner')) {
-                quickLogin('admin');
-            } else if (email.includes('ayesha')) {
-                quickLogin('ayesha');
-            } else {
-                quickLogin('tanvir');
+                sessionStorage.setItem('elitepay_user_role', 'admin');
+                sessionStorage.setItem('elitepay_current_user', email);
+                window.location.href = 'admin-panel.html';
+                return;
             }
+
+            // Customer Accounts Storage
+            let accounts = {};
+            try {
+                accounts = JSON.parse(localStorage.getItem('elitepay_accounts')) || {};
+            } catch(err) {
+                accounts = {};
+            }
+
+            // If account doesn't exist yet, auto-provision with 3-Day Free Trial
+            if (!accounts[email]) {
+                const namePrefix = email.split('@')[0].replace(/[^a-zA-Z0-9]/g, ' ');
+                const storeName = namePrefix.charAt(0).toUpperCase() + namePrefix.slice(1) + " Store";
+                const ownerName = namePrefix.charAt(0).toUpperCase() + namePrefix.slice(1);
+                const now = Date.now();
+                const trialEndsAt = now + (3 * 24 * 60 * 60 * 1000); // 3 Days in milliseconds
+
+                accounts[email] = {
+                    email: email,
+                    storeName: storeName,
+                    ownerName: ownerName,
+                    plan: "3-Day Free Trial",
+                    planType: "trial",
+                    isTrial: true,
+                    trialEndsAt: trialEndsAt,
+                    createdAt: now,
+                    todaySales: "৳ 0.00",
+                    totalSales: "৳ 0.00",
+                    orderCount: 0,
+                    bkash: "01700-000000",
+                    nagad: "01800-000000",
+                    deviceName: "Android Companion (Ready)",
+                    deviceToken: "elite_dev_" + Math.random().toString(36).substring(2, 9),
+                    merchantId: "ELITE-" + Math.floor(100000 + Math.random() * 900000),
+                    apiKey: "sk_live_" + Math.random().toString(36).substring(2, 14),
+                    webhookUrl: "https://" + email.split('@')[0] + ".com/api/payment-webhook",
+                    transactions: [
+                        {
+                            id: "BK" + Math.floor(10000000 + Math.random() * 90000000) + "X",
+                            invoice: "INV-101",
+                            gateway: "bKash",
+                            phone: "01755-123***",
+                            amount: "৳ 500.00",
+                            status: "Verified",
+                            time: "Sample Demo"
+                        }
+                    ],
+                    links: [
+                        {
+                            title: "Starter Product Checkout",
+                            amount: 500,
+                            url: "https://piprapayxjojo.vercel.app/pay/starter-product"
+                        }
+                    ]
+                };
+                localStorage.setItem('elitepay_accounts', JSON.stringify(accounts));
+            }
+
+            sessionStorage.setItem('elitepay_user_role', 'customer');
+            sessionStorage.setItem('elitepay_current_user', email);
+            window.location.href = 'customer-panel.html';
         });
     </script>
 </body>

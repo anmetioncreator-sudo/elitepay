@@ -4,7 +4,7 @@
         exit('Direct access not allowed');
     }
 
-    $brand_name = "ZiniPay";
+    $brand_name = "ElitePay";
     $brand_tagline = "Best Online Payment Automation in Bangladesh 2026";
     $login_url = (!empty($site_url)) ? rtrim($site_url, '/') . '/pp-content/pp-admin/login.php' : 'login.html';
     $register_url = (!empty($site_url)) ? rtrim($site_url, '/') . '/pp-content/pp-admin/register.php' : 'register.html';
@@ -15,8 +15,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title><?= htmlspecialchars($brand_name) ?> — <?= htmlspecialchars($brand_tagline) ?></title>
-    <meta name="description" content="ZiniPay helps Bangladesh businesses accept and verify bKash, Nagad, Rocket, and Upay payments automatically with API and plugin support."/>
-    <meta name="keywords" content="payment automation Bangladesh, best online payment automation in Bangladesh, bKash payment automation, Nagad payment verification, Rocket payment automation, payment without merchant account, personal number payment automation, WooCommerce payment gateway Bangladesh, SMM panel payment gateway Bangladesh, multi user payment dashboard, team management payment dashboard, payment automation for entrepreneurs, payment gateway for business owners Bangladesh, payment automation for online sellers, ZiniPay API"/>
+    <meta name="description" content="ElitePay helps Bangladesh businesses accept and verify bKash, Nagad, Rocket, and Upay payments automatically with API and plugin support."/>
+    <meta name="keywords" content="payment automation Bangladesh, best online payment automation in Bangladesh, bKash payment automation, Nagad payment verification, Rocket payment automation, payment without merchant account, personal number payment automation, WooCommerce payment gateway Bangladesh, SMM panel payment gateway Bangladesh, multi user payment dashboard, team management payment dashboard, payment automation for entrepreneurs, payment gateway for business owners Bangladesh, payment automation for online sellers, ElitePay API"/>
     <link rel="shortcut icon" href="<?= htmlspecialchars($elitepay_favicon ?? $piprapay_favicon ?? 'assets/images/elitepay-favicon.svg') ?>" type="image/svg+xml"/>
 
     <!-- Google Fonts: Poppins & Plus Jakarta Sans & Fira Code -->
@@ -102,7 +102,7 @@
     <div class="bg-gradient-to-r from-sky-700 via-sky-600 to-cyan-500 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium shadow-sm">
         <div class="max-w-7xl mx-auto flex items-center justify-center gap-2">
             <span class="bg-white/20 px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wider font-bold">New</span>
-            <span>⚡ ZiniPay 3.1 is live — Instant Personal Number Verification & Multi-Device SMS Sync.</span>
+            <span>⚡ ElitePay 3.1 is live — Instant Personal Number Verification & Multi-Device SMS Sync.</span>
             <a href="#demo-sandbox" onclick="openSandboxModal()" class="underline underline-offset-2 hover:text-cyan-100 transition font-semibold cursor-pointer">Try Live Demo &rarr;</a>
         </div>
     </div>
@@ -113,7 +113,7 @@
             <div class="mx-auto flex h-14 w-full max-w-7xl items-center justify-between gap-4">
                 
                 <!-- Brand Logo -->
-                <a class="flex shrink-0 items-center gap-3" aria-label="ZiniPay Home" href="./">
+                <a class="flex shrink-0 items-center gap-3" aria-label="ElitePay Home" href="./">
                     <span class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-sky-100 bg-sky-50 shadow-sm dark:border-sky-500/20 dark:bg-slate-900">
                         <svg class="h-6 w-6 text-sky-600 dark:text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
@@ -143,7 +143,7 @@
 
                 <!-- Right Action Buttons -->
                 <div class="hidden items-center gap-3 lg:flex">
-                    <a target="_blank" rel="noreferrer" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-sky-600 transition-colors hover:border-sky-300 hover:bg-sky-50 dark:border-slate-800 dark:bg-slate-900 dark:text-sky-300" aria-label="Telegram updates" href="https://t.me/s/zinipay">
+                    <a target="_blank" rel="noreferrer" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-sky-600 transition-colors hover:border-sky-300 hover:bg-sky-50 dark:border-slate-800 dark:bg-slate-900 dark:text-sky-300" aria-label="Telegram updates" href="https://t.me/s/elitepay">
                         <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 496 512" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"></path></svg>
                     </a>
 
@@ -188,7 +188,7 @@
                     </div>
 
                     <p class="text-gray-600 leading-relaxed text-base sm:text-lg dark:text-slate-300 max-w-xl">
-                        ZiniPay is a simple and secure online payment automation in Bangladesh that helps businesses receive money through bKash, Nagad, Rocket, and Upay. It offers an easy API and plugins so any website can set up payments quickly.
+                        ElitePay is a simple and secure online payment automation in Bangladesh that helps businesses receive money through bKash, Nagad, Rocket, and Upay. It offers an easy API and plugins so any website can set up payments quickly.
                     </p>
 
                     <div class="flex flex-wrap items-center gap-4 pt-2">
@@ -209,7 +209,7 @@
                             <div class="flex items-center justify-between pb-4 border-b border-slate-800/80">
                                 <div class="flex items-center gap-2">
                                     <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></div>
-                                    <span class="text-[11px] font-mono font-bold tracking-wider text-emerald-400">ZINIPAY DAEMON</span>
+                                    <span class="text-[11px] font-mono font-bold tracking-wider text-emerald-400">ELITEPAY DAEMON</span>
                                 </div>
                                 <span class="text-[10px] font-mono text-slate-400">LIVE SYNC</span>
                             </div>
@@ -307,7 +307,7 @@
 
     <!-- Footer -->
     <footer class="bg-[#0D0D10] text-white py-12 border-t border-slate-800 text-center text-xs text-gray-500">
-        <p>&copy; 2026 ZiNiPay. All rights reserved.</p>
+        <p>&copy; 2026 ElitePay. All rights reserved.</p>
     </footer>
 </body>
 </html>
