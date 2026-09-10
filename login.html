@@ -1,75 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="author" content="ElitePay">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Login - ElitePay</title>
-    <link rel="shortcut icon" href="assets/images/elitepay-favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="assets/css/tabler.min.css?v=1.5" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler-vendors.min.css" />
-
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Login - ZiniPay Payment Automation</title>
+    <link rel="shortcut icon" href="assets/images/elitepay-favicon.svg" type="image/svg+xml"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sky: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-      @import url("assets/css/inter.css");
-      :root{
-          --tblr-font-monospace: Monaco, Consolas, Liberation Mono, Courier New, monospace;
-          --tblr-font-sans-serif: Inter Var, Inter, -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
-      }
+        .btn-zini-gradient {
+            background: linear-gradient(90deg, #007aff 0%, #5bc0ff 50%, #007aff 100%);
+            background-size: 200% auto;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(0, 122, 255, 0.3);
+        }
+        .btn-zini-gradient:hover {
+            background-position: right center;
+            box-shadow: 0 12px 30px rgba(0, 122, 255, 0.45);
+            transform: translateY(-1px);
+        }
     </style>
 </head>
-<body class="d-flex flex-column bg-light">
-    <div class="page page-center">
-        <div class="container container-tight py-4">
-            <div class="text-center mb-4">
-                <a href="./"><img src="assets/images/elitepay-logo-dark.svg" alt="ElitePay" style="height: 44px;"></a>
+<body class="bg-gradient-to-b from-white via-sky-50/40 to-[#f5f9ff] min-h-screen flex items-center justify-center p-4 text-slate-800 font-sans">
+    <div class="w-full max-w-md">
+        
+        <!-- Logo -->
+        <div class="text-center mb-6">
+            <a href="./" class="inline-flex items-center gap-3">
+                <span class="flex h-11 w-11 items-center justify-center rounded-full border border-sky-100 bg-sky-50 shadow-sm">
+                    <svg class="h-6 w-6 text-sky-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                    </svg>
+                </span>
+                <span class="text-2xl font-extrabold tracking-tight text-sky-600">ZiniPay</span>
+            </a>
+            <p class="text-xs text-slate-500 mt-1">Smart Payment Automation Dashboard</p>
+        </div>
+
+        <!-- Login Card -->
+        <div class="bg-white rounded-3xl border border-slate-200/80 p-8 shadow-xl shadow-sky-950/5">
+            <h2 class="text-2xl font-bold text-slate-900 text-center mb-2">Merchant Sign In</h2>
+            <p class="text-xs text-slate-500 text-center mb-6">Access your transactions, devices, and automated SMS sync</p>
+
+            <!-- Info banner -->
+            <div class="rounded-2xl border border-sky-200 bg-sky-50/80 p-3.5 mb-6 text-xs text-sky-800 flex items-start gap-2.5">
+                <svg class="w-5 h-5 text-sky-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>Live demo preview. Enter any demo credentials to simulate merchant access.</span>
             </div>
-            <div class="card card-md shadow-sm">
-                <div class="card-body">
-                    <h2 class="h2 text-center mb-4">Login to ElitePay</h2>
 
-                    <div class="alert alert-info d-flex align-items-center mb-3" role="alert">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"><path d="M12 9h.01" /><path d="M11 12h1v4h1" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
-                        <small>Online Vercel Demo Preview. Database authentication is active on your cPanel live installation.</small>
-                    </div>
-
-                    <form action="#" method="POST" id="loginForm">
-                        <div class="mb-3">
-                            <label class="form-label">Email or Username</label>
-                            <input type="text" class="form-control" name="username" placeholder="demo@elitepay.com" value="admin@elitepay.com" required>
-                        </div>
-                        <div class="mb-2">
-                            <label class="form-label">
-                                Password
-                            </label>
-                            <div class="input-group input-group-flat">
-                                <input type="password" class="form-control password-input" name="password" value="12345678" required>
-                            </div>
-                        </div>
-                        <div class="mb-3 mt-2">
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" checked>
-                                <span class="form-check-label">Remember me on this device</span>
-                            </label>
-                        </div>
-                        <div class="form-footer">
-                            <button type="submit" class="btn btn-primary w-100">Sign in (Demo)</button>
-                        </div>
-                    </form>
+            <form action="#" method="POST" id="loginForm" class="space-y-4 text-xs">
+                <div>
+                    <label class="font-bold text-slate-700 block mb-1.5">Email or Username</label>
+                    <input type="text" name="username" value="demo@zinipay.com" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
                 </div>
-            </div>
-            <div class="text-center text-secondary mt-3">
-                Don't have a merchant account? <a href="register" class="text-primary font-weight-bold">Register Now</a>
-            </div>
-            <div class="text-center text-secondary mt-2">
-                <a href="./" class="text-muted small">&larr; Back to ElitePay Website</a>
-            </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-1.5">
+                        <label class="font-bold text-slate-700">Password</label>
+                        <a href="#" class="text-sky-600 hover:underline">Forgot password?</a>
+                    </div>
+                    <input type="password" name="password" value="12345678" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
+                </div>
+
+                <div class="flex items-center gap-2 pt-1">
+                    <input type="checkbox" id="rememberMe" checked class="rounded border-slate-300 text-sky-600 focus:ring-sky-500 h-4 w-4"/>
+                    <label for="rememberMe" class="text-slate-600 font-medium">Remember me on this device</label>
+                </div>
+
+                <div class="pt-3">
+                    <button type="submit" class="w-full btn-zini-gradient rounded-xl py-3.5 text-sm font-bold text-white shadow-md">
+                        Sign In &rarr;
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="text-center text-xs text-slate-500 mt-6 space-y-2">
+            <p>Don't have an account yet? <a href="register.html" class="text-sky-600 font-bold hover:underline">Create Merchant Account</a></p>
+            <p><a href="./" class="text-slate-400 hover:text-slate-600 transition">&larr; Back to ZiniPay Home</a></p>
         </div>
     </div>
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert("ElitePay Vercel Demo:\n\nThis is a frontend preview of the ElitePay merchant portal.\nFor the full database-connected dashboard with SMS sync, deploy the 'elitepay-cpanel-ready.zip' package to your cPanel hosting!");
+            alert("ZiniPay Demo Mode:\n\nAuthentication simulated successfully!\nIn your self-hosted cPanel installation, this signs in to the full PHP/MySQL backend at /pp-content/pp-admin/.");
         });
     </script>
 </body>

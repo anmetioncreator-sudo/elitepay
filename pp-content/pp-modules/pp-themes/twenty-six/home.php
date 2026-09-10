@@ -4,21 +4,25 @@
         exit('Direct access not allowed');
     }
 
-    $brand_name = "ElitePay";
-    $brand_tagline = "Automated Payment Infrastructure for Bangladesh & Global Markets";
+    $brand_name = "ZiniPay";
+    $brand_tagline = "Best Online Payment Automation in Bangladesh 2026";
+    $login_url = (!empty($site_url)) ? rtrim($site_url, '/') . '/pp-content/pp-admin/login.php' : 'login.html';
+    $register_url = (!empty($site_url)) ? rtrim($site_url, '/') . '/pp-content/pp-admin/register.php' : 'register.html';
 ?>
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title><?= htmlspecialchars($brand_name) ?> — <?= htmlspecialchars($brand_tagline) ?></title>
-    <link rel="shortcut icon" href="<?= htmlspecialchars($elitepay_favicon ?? $piprapay_favicon ?? $site_url.'assets/images/elitepay-favicon.svg') ?>" type="image/svg+xml">
+    <meta name="description" content="ZiniPay helps Bangladesh businesses accept and verify bKash, Nagad, Rocket, and Upay payments automatically with API and plugin support."/>
+    <meta name="keywords" content="payment automation Bangladesh, best online payment automation in Bangladesh, bKash payment automation, Nagad payment verification, Rocket payment automation, payment without merchant account, personal number payment automation, WooCommerce payment gateway Bangladesh, SMM panel payment gateway Bangladesh, multi user payment dashboard, team management payment dashboard, payment automation for entrepreneurs, payment gateway for business owners Bangladesh, payment automation for online sellers, ZiniPay API"/>
+    <link rel="shortcut icon" href="<?= htmlspecialchars($elitepay_favicon ?? $piprapay_favicon ?? 'assets/images/elitepay-favicon.svg') ?>" type="image/svg+xml"/>
 
-    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <!-- Google Fonts: Poppins & Plus Jakarta Sans & Fira Code -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -28,847 +32,282 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            200: '#c7d2fe',
-                            300: '#a5b4fc',
-                            400: '#818cf8',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            800: '#3730a3',
-                            900: '#312e81',
+                        sky: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
                         },
-                        dark: {
-                            900: '#070b14',
-                            800: '#0b1324',
-                            700: '#111d38',
-                            600: '#1a2b4c',
+                        ziniblue: {
+                            400: '#5bc0ff',
+                            500: '#007aff',
+                            600: '#0062cc',
+                        },
+                        slate: {
+                            950: '#071426',
+                            900: '#0b1324',
+                            850: '#0f1a32',
                         }
                     },
                     fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+                        sans: ['Poppins', '"Plus Jakarta Sans"', 'sans-serif'],
                         mono: ['"Fira Code"', 'monospace'],
+                    },
+                    animation: {
+                        'brand-slide': 'brandSlide 55s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        brandSlide: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        }
                     }
                 }
             }
         }
     </script>
     <style>
-        .gradient-text {
-            background: linear-gradient(135deg, #6366F1 0%, #4F46E5 50%, #06B6D4 100%);
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .text-gradient-sky {
+            background: linear-gradient(90deg, #38bdf8 0%, #0284c7 50%, #38bdf8 100%);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .hero-glow {
-            background: radial-gradient(circle at 50% 20%, rgba(99, 102, 241, 0.15) 0%, rgba(6, 182, 212, 0.05) 45%, transparent 70%);
+        .btn-zini-gradient {
+            background: linear-gradient(90deg, #007aff 0%, #5bc0ff 50%, #007aff 100%);
+            background-size: 200% auto;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(0, 122, 255, 0.3);
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-        }
-        .dark-glass-card {
-            background: rgba(17, 29, 56, 0.7);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .btn-zini-gradient:hover {
+            background-position: right center;
+            box-shadow: 0 12px 30px rgba(0, 122, 255, 0.45);
+            transform: translateY(-1px);
         }
     </style>
 </head>
-<body class="bg-[#F8FAFC] text-slate-800 font-sans antialiased overflow-x-hidden">
+<body class="bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 antialiased selection:bg-sky-500 selection:text-white">
 
     <!-- Top Announcement Bar -->
-    <div class="bg-gradient-to-r from-brand-700 via-brand-600 to-cyan-600 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium shadow-sm">
+    <div class="bg-gradient-to-r from-sky-700 via-sky-600 to-cyan-500 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium shadow-sm">
         <div class="max-w-7xl mx-auto flex items-center justify-center gap-2">
-            <span class="bg-white/20 px-2 py-0.5 rounded-full text-[11px] uppercase tracking-wider font-semibold">New</span>
-            <span>⚡ Automated SMS Verification 3.0 is now live with 45+ gateway connectors.</span>
-            <a href="#gateways" class="underline underline-offset-2 hover:text-cyan-200 transition">Explore Gateways &rarr;</a>
+            <span class="bg-white/20 px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wider font-bold">New</span>
+            <span>⚡ ZiniPay 3.1 is live — Instant Personal Number Verification & Multi-Device SMS Sync.</span>
+            <a href="#demo-sandbox" onclick="openSandboxModal()" class="underline underline-offset-2 hover:text-cyan-100 transition font-semibold cursor-pointer">Try Live Demo &rarr;</a>
         </div>
     </div>
 
-    <!-- Navigation Header -->
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 transition duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <!-- Logo -->
-                <a href="<?= $site_url ?>" class="flex items-center gap-3">
-                    <img src="<?= $site_url ?>assets/images/elitepay-logo-dark.svg" alt="ElitePay" class="h-10 w-auto">
+    <!-- Sticky Navigation Header -->
+    <header class="relative">
+        <nav class="fixed left-0 z-50 w-full px-4 py-3 transition-all duration-300 sm:px-6 lg:px-8 top-0 border-b border-slate-100/80 bg-white/80 backdrop-blur-xl dark:border-slate-800/80 dark:bg-slate-950/70 shadow-sm">
+            <div class="mx-auto flex h-14 w-full max-w-7xl items-center justify-between gap-4">
+                
+                <!-- Brand Logo -->
+                <a class="flex shrink-0 items-center gap-3" aria-label="ZiniPay Home" href="./">
+                    <span class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-sky-100 bg-sky-50 shadow-sm dark:border-sky-500/20 dark:bg-slate-900">
+                        <svg class="h-6 w-6 text-sky-600 dark:text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                        </svg>
+                    </span>
+                    <span class="leading-none">
+                        <span class="block text-xl font-extrabold tracking-tight text-sky-600 dark:text-white"><?= htmlspecialchars($brand_name) ?></span>
+                        <span class="hidden text-[10px] font-bold uppercase tracking-[0.18em] text-sky-900 dark:text-sky-300 sm:block">Payment Automation</span>
+                    </span>
                 </a>
 
-                <!-- Desktop Navigation Links -->
-                <nav class="hidden md:flex items-center gap-8 text-[15px] font-semibold text-slate-600">
-                    <a href="#features" class="hover:text-brand-600 transition">Features</a>
-                    <a href="#how-it-works" class="hover:text-brand-600 transition">How it Works</a>
-                    <a href="#gateways" class="hover:text-brand-600 transition">Supported Gateways</a>
-                    <a href="#download-app" class="hover:text-brand-600 transition flex items-center gap-1.5 text-brand-600 font-bold">
-                        <span class="relative flex h-2 w-2">
-                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
-                          <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
-                        </span>
-                        Mobile App
-                    </a>
-                    <a href="#pricing" class="hover:text-brand-600 transition">Pricing</a>
-                    <a href="#api" class="hover:text-brand-600 transition">Developer API</a>
-                </nav>
-
-                <!-- Actions -->
-                <div class="hidden md:flex items-center gap-4">
-                    <a href="<?= $site_url ?>login" class="text-[15px] font-semibold text-slate-700 hover:text-brand-600 px-4 py-2 transition">
-                        Merchant Login
-                    </a>
-                    <a href="<?= $site_url ?>register" class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-brand-600 to-brand-500 rounded-xl hover:from-brand-700 hover:to-brand-600 shadow-md shadow-brand-500/25 transition transform active:scale-95">
-                        Get Started Free
-                    </a>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobileMenuBtn" class="p-2 text-slate-600 hover:text-slate-900 focus:outline-none">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
+                <!-- Desktop Navigation Menu Pills -->
+                <div class="hidden items-center gap-1 rounded-full border border-slate-200/80 bg-white/80 px-2 py-1 shadow-sm dark:border-slate-800 dark:bg-slate-900/80 lg:flex">
+                    <a class="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-950 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white" href="./">Home</a>
+                    <a class="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-950 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white" href="#pricing">Pricing</a>
+                    
+                    <button onclick="openSandboxModal()" class="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-950 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white cursor-pointer">
+                        <span>Demo Sandbox</span>
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="h-3 w-3 text-sky-500" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"></path></svg>
                     </button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Mobile Navigation Menu -->
-        <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-slate-100 px-4 pt-2 pb-6 space-y-3">
-            <a href="#features" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Features</a>
-            <a href="#how-it-works" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">How it Works</a>
-            <a href="#gateways" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Supported Gateways</a>
-            <a href="#download-app" class="block px-3 py-2 rounded-lg text-base font-bold text-brand-600 bg-brand-50">📲 Mobile App (Download APK)</a>
-            <a href="#pricing" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Pricing</a>
-            <a href="#api" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Developer API</a>
-            <div class="pt-4 border-t border-slate-100 flex flex-col gap-2">
-                <a href="<?= $site_url ?>login" class="w-full text-center py-2.5 text-sm font-bold text-slate-700 bg-slate-100 rounded-xl">Merchant Login</a>
-                <a href="<?= $site_url ?>register" class="w-full text-center py-2.5 text-sm font-bold text-white bg-brand-600 rounded-xl shadow-md">Get Started Free</a>
+                    <a class="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-950 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white" href="#how-it-works">How It Works</a>
+                    <a class="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-950 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white" href="#gateways">Gateways</a>
+                    <a class="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-950 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white" href="#integrations">Plugins</a>
+                    <a class="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-950 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white" href="#faq">FAQ</a>
+                </div>
+
+                <!-- Right Action Buttons -->
+                <div class="hidden items-center gap-3 lg:flex">
+                    <a target="_blank" rel="noreferrer" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-sky-600 transition-colors hover:border-sky-300 hover:bg-sky-50 dark:border-slate-800 dark:bg-slate-900 dark:text-sky-300" aria-label="Telegram updates" href="https://t.me/s/zinipay">
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 496 512" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"></path></svg>
+                    </a>
+
+                    <a class="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-600 to-cyan-500 px-5 py-2.5 text-sm font-bold text-white shadow-sm shadow-sky-500/25 transition-all hover:from-sky-700 hover:to-cyan-600 hover:shadow-md hover:shadow-sky-500/30" href="<?= htmlspecialchars($login_url) ?>">
+                        <span>Login</span>
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Mobile Hamburger Button -->
+                <button id="mobileMenuBtn" aria-label="Toggle menu" class="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-900 shadow-sm transition-colors hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-white lg:hidden">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
             </div>
-        </div>
+        </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="relative pt-12 pb-20 md:pt-20 md:pb-32 hero-glow overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-3xl mx-auto">
-                <!-- Pill Badge -->
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-50 border border-brand-200/60 text-brand-700 text-xs sm:text-sm font-semibold mb-6 shadow-sm">
-                    <span class="flex h-2 w-2 rounded-full bg-brand-600 animate-pulse"></span>
-                    Self-Hosted FinTech Automation Platform
-                </div>
+    <main class="pt-16 sm:pt-20">
 
-                <!-- Headline -->
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15] mb-6">
-                    Accept & Automate Payments with <span class="gradient-text">Zero Friction</span>
-                </h1>
+        <!-- ==================== HERO SECTION ==================== -->
+        <section class="relative overflow-hidden bg-gradient-to-b from-white via-sky-50/40 to-[#f5f9ff] py-20 md:py-32 px-6 md:px-10 text-gray-900 dark:from-slate-950 dark:via-[#071426] dark:to-[#071426] dark:text-slate-100">
+            <div class="pointer-events-none absolute -top-32 -left-24 h-80 w-80 rounded-full bg-[#58b4ff]/20 blur-3xl"></div>
+            <div class="pointer-events-none absolute top-1/3 -right-28 h-96 w-96 rounded-full bg-[#8dcfff]/25 blur-3xl"></div>
+            <div class="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white via-transparent dark:from-slate-950"></div>
 
-                <!-- Subtitle -->
-                <p class="text-lg sm:text-xl text-slate-600 leading-relaxed mb-10 max-w-2xl mx-auto">
-                    Unify bKash, Nagad, Rocket, Cards, and Banking networks into one single, powerful payment engine. Automated SMS verification, instant webhooks, and full control over your money.
-                </p>
-
-                <!-- CTA Buttons -->
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14">
-                    <a href="<?= $site_url ?>register" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-gradient-to-r from-brand-600 via-brand-600 to-indigo-700 rounded-2xl shadow-xl shadow-brand-500/25 hover:shadow-brand-500/40 hover:-translate-y-0.5 transition duration-200">
-                        <span>Launch Your Gateway</span>
-                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                        </svg>
-                    </a>
-                    <a href="#api" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold text-slate-700 bg-white border border-slate-200 rounded-2xl hover:bg-slate-50 hover:border-slate-300 shadow-sm transition">
-                        <svg class="w-5 h-5 mr-2 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
-                        </svg>
-                        Explore API Docs
-                    </a>
-                </div>
-
-                <!-- Trust Metrics -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 pt-6 border-t border-slate-200/80 max-w-4xl mx-auto">
-                    <div>
-                        <div class="text-2xl sm:text-3xl font-extrabold text-slate-900">99.9%</div>
-                        <div class="text-xs sm:text-sm text-slate-500 font-medium">Uptime Guarantee</div>
-                    </div>
-                    <div>
-                        <div class="text-2xl sm:text-3xl font-extrabold text-slate-900">&lt; 3 Sec</div>
-                        <div class="text-xs sm:text-sm text-slate-500 font-medium">Auto SMS Verification</div>
-                    </div>
-                    <div>
-                        <div class="text-2xl sm:text-3xl font-extrabold text-slate-900">45+</div>
-                        <div class="text-xs sm:text-sm text-slate-500 font-medium">Supported Gateways</div>
-                    </div>
-                    <div>
-                        <div class="text-2xl sm:text-3xl font-extrabold text-slate-900">0%</div>
-                        <div class="text-xs sm:text-sm text-slate-500 font-medium">Third-Party Holding</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Hero Interactive Preview Showcase -->
-            <div class="mt-16 max-w-5xl mx-auto">
-                <div class="relative rounded-3xl p-3 sm:p-4 bg-gradient-to-b from-slate-200/60 to-slate-100 shadow-2xl border border-white/60">
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-inner border border-slate-100 p-6 sm:p-8">
-                        <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
-                            
-                            <!-- Mock Checkout Widget -->
-                            <div class="w-full lg:w-1/2 bg-slate-50 rounded-2xl p-6 border border-slate-200/70 shadow-sm">
-                                <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-200">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-7 h-7 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold text-xs">E</div>
-                                        <span class="font-bold text-slate-800 text-sm">ElitePay Checkout</span>
-                                    </div>
-                                    <span class="text-xs font-semibold text-slate-500">Order #EP-82910</span>
-                                </div>
-
-                                <div class="text-center my-4">
-                                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Amount</span>
-                                    <div class="text-3xl font-extrabold text-slate-900">৳ 2,450.00 <span class="text-xs font-normal text-slate-500">BDT</span></div>
-                                </div>
-
-                                <div class="space-y-2.5 my-4">
-                                    <label class="flex items-center justify-between p-3 rounded-xl border-2 border-pink-500 bg-pink-50/40 cursor-pointer">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-9 h-9 rounded-lg bg-[#E2136E] flex items-center justify-center text-white font-bold text-xs">bKash</div>
-                                            <div class="text-left">
-                                                <div class="text-sm font-bold text-slate-900">bKash (Personal / Merchant)</div>
-                                                <div class="text-xs text-slate-500">Instant Verification</div>
-                                            </div>
-                                        </div>
-                                        <span class="w-4 h-4 rounded-full border-4 border-pink-600 bg-white"></span>
-                                    </label>
-
-                                    <label class="flex items-center justify-between p-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 cursor-pointer">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-9 h-9 rounded-lg bg-[#F7941D] flex items-center justify-center text-white font-bold text-xs">Nagad</div>
-                                            <div class="text-left">
-                                                <div class="text-sm font-bold text-slate-900">Nagad</div>
-                                                <div class="text-xs text-slate-500">Automated Match</div>
-                                            </div>
-                                        </div>
-                                        <span class="w-4 h-4 rounded-full border border-slate-300"></span>
-                                    </label>
-
-                                    <label class="flex items-center justify-between p-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 cursor-pointer">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-9 h-9 rounded-lg bg-[#8C3494] flex items-center justify-center text-white font-bold text-xs">Rocket</div>
-                                            <div class="text-left">
-                                                <div class="text-sm font-bold text-slate-900">Rocket (DBBL)</div>
-                                                <div class="text-xs text-slate-500">Fast Callback</div>
-                                            </div>
-                                        </div>
-                                        <span class="w-4 h-4 rounded-full border border-slate-300"></span>
-                                    </label>
-                                </div>
-
-                                <button class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold text-sm shadow transition">
-                                    Proceed with bKash
-                                </button>
-                            </div>
-
-                            <!-- Live Automation Simulation Side -->
-                            <div class="w-full lg:w-1/2 space-y-4">
-                                <div class="text-left">
-                                    <span class="text-xs font-bold text-brand-600 uppercase tracking-wider">How Automation Works</span>
-                                    <h3 class="text-xl font-extrabold text-slate-900 mt-1">From Customer Payment to Instant Approval</h3>
-                                    <p class="text-sm text-slate-500 mt-1">Your merchant phone receives SMS &rarr; ElitePay Engine parses TrxID &rarr; Order is marked Paid in seconds.</p>
-                                </div>
-
-                                <!-- Step Card 1 -->
-                                <div class="flex items-start gap-4 p-4 rounded-2xl bg-white border border-slate-100 shadow-sm">
-                                    <div class="w-10 h-10 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center flex-shrink-0 font-bold text-lg">
-                                        💬
-                                    </div>
-                                    <div class="text-left">
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-xs font-bold text-slate-800">SMS Received from bKash</span>
-                                            <span class="text-[11px] text-slate-400">Just now</span>
-                                        </div>
-                                        <p class="text-xs text-slate-600 font-mono mt-1 bg-slate-50 p-2 rounded border border-slate-100">
-                                            You have received Tk 2,450.00 from 017XXXXXXXX. TrxID: 9K284LM1.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <!-- Step Card 2 -->
-                                <div class="flex items-start gap-4 p-4 rounded-2xl bg-emerald-50/60 border border-emerald-200 shadow-sm">
-                                    <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center flex-shrink-0 font-bold text-lg">
-                                        ✓
-                                    </div>
-                                    <div class="text-left">
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-xs font-bold text-emerald-800">Payment Verified & Settled</span>
-                                            <span class="text-[11px] font-bold text-emerald-600">SUCCESS</span>
-                                        </div>
-                                        <p class="text-xs text-emerald-700 mt-1">
-                                            Transaction matched with Order #EP-82910. Webhook dispatched to your website.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Supported Gateways Showcase -->
-    <section id="gateways" class="py-16 bg-white border-y border-slate-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-8">
-                Pre-configured for 45+ Payment Providers Across Bangladesh & Worldwide
-            </p>
-
-            <div class="flex flex-wrap items-center justify-center gap-6 md:gap-10">
-                <div class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200/70 shadow-sm hover:border-pink-300 transition">
-                    <span class="w-3 h-3 rounded-full bg-[#E2136E]"></span>
-                    <span class="font-bold text-slate-800 text-sm">bKash Personal / Merchant</span>
-                </div>
-                <div class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200/70 shadow-sm hover:border-orange-300 transition">
-                    <span class="w-3 h-3 rounded-full bg-[#F7941D]"></span>
-                    <span class="font-bold text-slate-800 text-sm">Nagad Personal / Merchant</span>
-                </div>
-                <div class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200/70 shadow-sm hover:border-purple-300 transition">
-                    <span class="w-3 h-3 rounded-full bg-[#8C3494]"></span>
-                    <span class="font-bold text-slate-800 text-sm">Rocket (DBBL)</span>
-                </div>
-                <div class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200/70 shadow-sm hover:border-blue-300 transition">
-                    <span class="w-3 h-3 rounded-full bg-[#009FD6]"></span>
-                    <span class="font-bold text-slate-800 text-sm">Upay</span>
-                </div>
-                <div class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200/70 shadow-sm hover:border-emerald-300 transition">
-                    <span class="w-3 h-3 rounded-full bg-[#00897B]"></span>
-                    <span class="font-bold text-slate-800 text-sm">CellFin / IBBL</span>
-                </div>
-                <div class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200/70 shadow-sm hover:border-indigo-300 transition">
-                    <span class="w-3 h-3 rounded-full bg-[#6366F1]"></span>
-                    <span class="font-bold text-slate-800 text-sm">Visa & Mastercard</span>
-                </div>
-                <div class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200/70 shadow-sm hover:border-slate-400 transition">
-                    <span class="w-3 h-3 rounded-full bg-[#0F172A]"></span>
-                    <span class="font-bold text-slate-800 text-sm">Stripe, PayPal, Crypto</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Key Features Section -->
-    <section id="features" class="py-24 bg-[#F8FAFC]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-xs font-extrabold text-brand-600 uppercase tracking-widest">Built for Serious Scale</span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">Everything You Need to Run Your Payment Network</h2>
-                <p class="text-slate-600 text-base mt-4">Enterprise-grade architecture crafted for high-volume transactions, automated reconciliation, and unmatched reliability.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm hover:shadow-md transition">
-                    <div class="w-14 h-14 rounded-2xl bg-brand-50 border border-brand-100 flex items-center justify-center text-brand-600 mb-6">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Instant SMS Parsing Engine</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Say goodbye to manual screenshot checks. Incoming payment messages are verified, matched by amount and transaction ID, and settled in under 3 seconds.
-                    </p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm hover:shadow-md transition">
-                    <div class="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 mb-6">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Bank-Grade Security & 2FA</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Google Authenticator 2FA, brute-force IP rate limiting, CSRF protection, and domain-whitelisted webhook dispatches keep your operations impenetrable.
-                    </p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm hover:shadow-md transition">
-                    <div class="w-14 h-14 rounded-2xl bg-cyan-50 border border-cyan-100 flex items-center justify-center text-cyan-600 mb-6">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Android Companion App</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        One-click QR code device pairing. Works 24/7 in low-power background mode on any standard Android phone with your SIM card inserted.
-                    </p>
-                </div>
-
-                <!-- Feature 4 -->
-                <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm hover:shadow-md transition">
-                    <div class="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 mb-6">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">REST APIs & Webhooks</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Plug ElitePay into WooCommerce, WHMCS, custom Laravel, Node.js, Python, or Flutter applications in minutes with comprehensive SDKs and API keys.
-                    </p>
-                </div>
-
-                <!-- Feature 5 -->
-                <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm hover:shadow-md transition">
-                    <div class="w-14 h-14 rounded-2xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 mb-6">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Real-Time Ledger & Reports</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Track gross volume, successful transactions, provider distributions, and automated customer invoices in high-resolution PDF format.
-                    </p>
-                </div>
-
-                <!-- Feature 6 -->
-                <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm hover:shadow-md transition">
-                    <div class="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 mb-6">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">100% Self-Hosted & Private</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Your customer payment data and credentials live exclusively on your server. No third-party lock-in, zero unexpected account freezes.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="py-24 bg-white border-t border-slate-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-xs font-extrabold text-brand-600 uppercase tracking-widest">Effortless Onboarding</span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">Get Up and Running in 3 Simple Steps</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-                <!-- Step 1 -->
-                <div class="text-center p-8 rounded-3xl bg-slate-50 border border-slate-200/60">
-                    <div class="w-12 h-12 rounded-2xl bg-brand-600 text-white font-extrabold text-lg flex items-center justify-center mx-auto mb-6 shadow-md shadow-brand-500/30">
-                        1
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Connect SIM or Gateway</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Add your bKash/Nagad merchant or personal numbers in the ElitePay portal, or scan the QR code using our Android Companion app.
-                    </p>
-                </div>
-
-                <!-- Step 2 -->
-                <div class="text-center p-8 rounded-3xl bg-slate-50 border border-slate-200/60">
-                    <div class="w-12 h-12 rounded-2xl bg-brand-600 text-white font-extrabold text-lg flex items-center justify-center mx-auto mb-6 shadow-md shadow-brand-500/30">
-                        2
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Integrate API or Link</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Create single-use Payment Links directly from your dashboard or integrate our REST API endpoint into your e-commerce checkout.
-                    </p>
-                </div>
-
-                <!-- Step 3 -->
-                <div class="text-center p-8 rounded-3xl bg-slate-50 border border-slate-200/60">
-                    <div class="w-12 h-12 rounded-2xl bg-brand-600 text-white font-extrabold text-lg flex items-center justify-center mx-auto mb-6 shadow-md shadow-brand-500/30">
-                        3
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Automate & Scale</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Sit back and watch payments get matched, verified, and reconciled instantly without human delay or manual verification errors.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Mobile Companion App Download Section -->
-    <section id="download-app" class="py-24 bg-gradient-to-b from-white via-brand-50/40 to-white relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="bg-gradient-to-br from-slate-900 via-dark-900 to-slate-950 rounded-3xl p-8 sm:p-12 lg:p-16 text-white shadow-2xl border border-slate-800 relative overflow-hidden">
-                <!-- Background ambient glow -->
-                <div class="absolute -right-20 -top-20 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute -left-20 -bottom-20 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none"></div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-                    <!-- Left: Download information & Action buttons -->
-                    <div class="lg:col-span-7 space-y-6">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/20 border border-brand-500/30 text-brand-300 text-xs font-bold uppercase tracking-wider">
-                            <span class="w-2 h-2 rounded-full bg-brand-400 animate-pulse"></span>
-                            Official Android Companion App
-                        </div>
-
-                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
-                            Download the <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-cyan-300 to-blue-400">ElitePay Companion</span> App
-                        </h2>
-
-                        <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
-                            Turn your Android device into an automated payment gateway. Pair it instantly with your ElitePay merchant account using a QR code to capture and verify bKash, Nagad, Rocket, and Upay SMS in real time.
-                        </p>
-
-                        <!-- Highlights -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                            <div class="flex items-center gap-2.5 text-sm text-slate-200">
-                                <div class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-bold">✓</div>
-                                <span>Free Trial & Paid Plan Compatible</span>
-                            </div>
-                            <div class="flex items-center gap-2.5 text-sm text-slate-200">
-                                <div class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-bold">✓</div>
-                                <span>Instant SMS TrxID Matching (&lt; 500ms)</span>
-                            </div>
-                            <div class="flex items-center gap-2.5 text-sm text-slate-200">
-                                <div class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-bold">✓</div>
-                                <span>Zero-Root & Ultra Battery Saver</span>
-                            </div>
-                            <div class="flex items-center gap-2.5 text-sm text-slate-200">
-                                <div class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-bold">✓</div>
-                                <span>One-Tap QR Code Auto Pairing</span>
-                            </div>
-                        </div>
-
-                        <!-- CTA Download Buttons -->
-                        <div class="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                            <!-- Direct APK Download -->
-                            <a href="<?= $site_url ?>assets/apps/elitepay-companion.apk" download class="inline-flex items-center justify-center gap-3 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-bold shadow-lg shadow-brand-600/30 hover:shadow-brand-500/50 transition transform active:scale-95 group">
-                                <svg class="w-6 h-6 text-white group-hover:translate-y-0.5 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-                                </svg>
-                                <div class="text-left">
-                                    <div class="text-[11px] uppercase tracking-wider text-brand-200 font-semibold leading-tight">Direct Download</div>
-                                    <div class="text-base font-extrabold leading-tight">Download APK (v3.2.0)</div>
-                                </div>
-                            </a>
-
-                            <!-- Google Play Store -->
-                            <a href="https://play.google.com/store/apps/details?id=com.qubeplug.billpax_tools" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-3 px-6 py-3.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold border border-slate-700 hover:border-slate-600 transition transform active:scale-95">
-                                <svg class="w-6 h-6 text-emerald-400" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M3.609 1.814L13.793 12 3.61 22.186a2.02 2.02 0 0 1-.61-.399 2.001 2.001 0 0 1-.5-.987V3.2c0-.367.172-.734.5-1-.001 0 .285-.262.609-.386zm11.603 11.603l2.25 2.25-11.83 6.83 9.58-9.08zm2.25-2.25l-2.25 2.25-9.58-9.08 11.83 6.83zm1.414 1.414l2.828-1.632a1.996 1.996 0 0 0 0-3.464l-2.828-1.632-1.768 1.768 1.768 1.768z"/>
-                                </svg>
-                                <div class="text-left">
-                                    <div class="text-[11px] uppercase tracking-wider text-slate-400 font-semibold leading-tight">Get it on</div>
-                                    <div class="text-base font-extrabold leading-tight">Google Play</div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <!-- Instructions footnote -->
-                        <p class="text-xs text-slate-400 pt-1">
-                            💡 <strong>How to use:</strong> Register an account &rarr; Login to Merchant Dashboard &rarr; Go to <span class="text-cyan-300 font-semibold">Devices</span> &rarr; Click <span class="text-cyan-300 font-semibold">Connect Device</span> &rarr; Scan the QR Code inside this companion app.
-                        </p>
+            <div class="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-16 lg:flex-row lg:justify-between">
+                
+                <div class="w-full max-w-2xl space-y-8 text-left">
+                    <div class="inline-flex items-center gap-2 rounded-full border border-sky-400/50 bg-sky-100/60 px-4 py-1.5 text-xs font-bold tracking-[0.16em] text-sky-600 shadow-sm backdrop-blur dark:border-sky-400/40 dark:bg-sky-400/10 dark:text-sky-200">
+                        <span class="inline-flex h-2.5 w-2.5 rounded-full bg-sky-500 animate-ping"></span>
+                        <span class="inline-flex h-2.5 w-2.5 -ml-4 rounded-full bg-sky-500"></span>
+                        <span>TRUSTED BY 500+ BUSINESSES</span>
                     </div>
 
-                    <!-- Right: Live Mockup Card -->
-                    <div class="lg:col-span-5">
-                        <div class="bg-dark-800/90 rounded-2xl border border-slate-700/80 p-6 shadow-2xl backdrop-blur-sm relative space-y-4">
-                            <!-- App Header -->
-                            <div class="flex items-center justify-between pb-4 border-b border-slate-700">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-cyan-500 flex items-center justify-center text-white font-extrabold shadow">
-                                        EP
-                                    </div>
-                                    <div>
-                                        <div class="font-bold text-sm text-white flex items-center gap-2">
-                                            ElitePay Companion
-                                            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                                        </div>
-                                        <div class="text-xs text-slate-400">Status: <span class="text-emerald-400 font-medium">Connected & Active</span></div>
-                                    </div>
-                                </div>
-                                <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-semibold">v3.2</span>
-                            </div>
-
-                            <!-- Pairing Info -->
-                            <div class="bg-dark-900/80 rounded-xl p-3.5 border border-slate-700/50 space-y-2 text-xs">
-                                <div class="flex justify-between text-slate-400">
-                                    <span>Sync Endpoint:</span>
-                                    <span class="font-mono text-cyan-300 truncate max-w-[180px]"><?= parse_url($site_url, PHP_URL_HOST) ?: 'api.elitepay.live' ?></span>
-                                </div>
-                                <div class="flex justify-between text-slate-400">
-                                    <span>SIM Slots:</span>
-                                    <span class="text-white font-medium">SIM 1 (bKash) • SIM 2 (Nagad)</span>
-                                </div>
-                                <div class="flex justify-between text-slate-400">
-                                    <span>Battery Optimization:</span>
-                                    <span class="text-emerald-400 font-medium">Excluded (Unrestricted)</span>
-                                </div>
-                            </div>
-
-                            <!-- Live Feed simulation -->
-                            <div class="space-y-2">
-                                <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Live SMS Engine Log</div>
-
-                                <div class="bg-slate-900/90 rounded-xl p-3 border border-slate-800 space-y-1">
-                                    <div class="flex items-center justify-between text-[11px]">
-                                        <span class="font-bold text-pink-400">bKash Received ৳1,200.00</span>
-                                        <span class="text-slate-400">Just now</span>
-                                    </div>
-                                    <p class="text-[11px] font-mono text-slate-400 truncate">TrxID: 9X82KD7M1P • Sender: 01712***</p>
-                                    <div class="text-[10px] text-emerald-400 font-semibold">✓ Verified & Hook dispatched (340ms)</div>
-                                </div>
-
-                                <div class="bg-slate-900/90 rounded-xl p-3 border border-slate-800 space-y-1">
-                                    <div class="flex items-center justify-between text-[11px]">
-                                        <span class="font-bold text-amber-400">Nagad Received ৳3,500.00</span>
-                                        <span class="text-slate-400">3 mins ago</span>
-                                    </div>
-                                    <p class="text-[11px] font-mono text-slate-400 truncate">TrxID: 74B81A02 • Sender: 01924***</p>
-                                    <div class="text-[10px] text-emerald-400 font-semibold">✓ Verified & Hook dispatched (280ms)</div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="space-y-3">
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.15] tracking-tight">
+                            Smart Payment Automation
+                            <span class="block bg-gradient-to-r from-sky-400 via-sky-600 to-sky-400 bg-[length:200%] bg-clip-text text-transparent">
+                                For Your Business
+                            </span>
+                        </h1>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Developer API Section -->
-    <section id="api" class="py-24 bg-dark-900 text-white relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
-                <!-- Left text -->
-                <div class="w-full lg:w-1/2">
-                    <span class="text-xs font-bold text-cyan-400 uppercase tracking-widest">Built for Engineers</span>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mt-2">
-                        Developer-First Payment APIs & Webhooks
-                    </h2>
-                    <p class="text-slate-400 text-base mt-4 leading-relaxed">
-                        Easily initiate checkouts, query transaction statuses, generate dynamic payment links, and receive cryptographically signed webhook notifications in real time.
+                    <p class="text-gray-600 leading-relaxed text-base sm:text-lg dark:text-slate-300 max-w-xl">
+                        ZiniPay is a simple and secure online payment automation in Bangladesh that helps businesses receive money through bKash, Nagad, Rocket, and Upay. It offers an easy API and plugins so any website can set up payments quickly.
                     </p>
 
-                    <div class="mt-8 space-y-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs font-bold">✓</div>
-                            <span class="text-sm font-semibold text-slate-300">Clean REST endpoints with JSON payloads</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs font-bold">✓</div>
-                            <span class="text-sm font-semibold text-slate-300">Bearer Token authorization & scoped API keys</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs font-bold">✓</div>
-                            <span class="text-sm font-semibold text-slate-300">Automatic webhook retries on failed responses</span>
-                        </div>
-                    </div>
-
-                    <div class="mt-8">
-                        <a href="<?= $site_url ?>login" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm transition">
-                            <span>Get API Keys from Dashboard</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    <div class="flex flex-wrap items-center gap-4 pt-2">
+                        <a href="#pricing" class="btn-zini-gradient rounded-full px-8 py-3.5 font-bold text-white shadow-lg shadow-sky-500/30 flex items-center gap-2 hover:scale-[1.02] transition">
+                            <span>Get Started</span>
+                            <span class="text-lg">&rarr;</span>
+                        </a>
+                        <a href="<?= htmlspecialchars($login_url) ?>" class="rounded-full border border-gray-300 bg-white/80 px-8 py-3.5 font-bold text-gray-700 backdrop-blur transition-all hover:border-[#007aff]/60 hover:text-[#007aff] hover:bg-white dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-100 dark:hover:border-sky-400">
+                            Login
                         </a>
                     </div>
                 </div>
 
-                <!-- Right Code Window -->
-                <div class="w-full lg:w-1/2">
-                    <div class="rounded-2xl bg-dark-800 border border-slate-700/80 shadow-2xl overflow-hidden">
-                        <div class="flex items-center justify-between px-5 py-3.5 bg-dark-700 border-b border-slate-700">
-                            <div class="flex items-center gap-2">
-                                <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
-                                <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
-                                <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
-                                <span class="ml-3 text-xs font-mono text-slate-400">create-payment.sh</span>
+                <!-- Right Phone Visual -->
+                <div class="relative flex w-full max-w-md items-center justify-center lg:w-auto">
+                    <div class="relative z-20 w-full max-w-[320px] rounded-[36px] border-[6px] border-slate-900 bg-slate-900 p-3 shadow-2xl shadow-sky-500/20">
+                        <div class="relative w-full rounded-[28px] bg-slate-950 overflow-hidden border border-slate-800 text-white p-4">
+                            <div class="flex items-center justify-between pb-4 border-b border-slate-800/80">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></div>
+                                    <span class="text-[11px] font-mono font-bold tracking-wider text-emerald-400">ZINIPAY DAEMON</span>
+                                </div>
+                                <span class="text-[10px] font-mono text-slate-400">LIVE SYNC</span>
                             </div>
-                            <span class="text-xs font-mono text-cyan-400 bg-cyan-950/60 px-2.5 py-0.5 rounded border border-cyan-800/60">POST /api/checkout/redirect</span>
-                        </div>
 
-                        <div class="p-6 font-mono text-xs sm:text-sm overflow-x-auto text-slate-300 space-y-2">
-                            <div class="text-slate-500"># Create checkout session with ElitePay</div>
-                            <div><span class="text-cyan-400">curl</span> -X POST <span class="text-amber-300">"<?= $site_url ?>api/checkout/redirect"</span> \</div>
-                            <div class="pl-4">-H <span class="text-emerald-400">"Authorization: Bearer ep_live_98a3f..."</span> \</div>
-                            <div class="pl-4">-H <span class="text-emerald-400">"Content-Type: application/json"</span> \</div>
-                            <div class="pl-4">-d <span class="text-slate-100">'{</span></div>
-                            <div class="pl-8 text-indigo-300">"full_name"<span class="text-slate-400">:</span> <span class="text-amber-300">"John Doe"</span>,</div>
-                            <div class="pl-8 text-indigo-300">"email_address"<span class="text-slate-400">:</span> <span class="text-amber-300">"customer@example.com"</span>,</div>
-                            <div class="pl-8 text-indigo-300">"amount"<span class="text-slate-400">:</span> <span class="text-emerald-400">2450</span>,</div>
-                            <div class="pl-8 text-indigo-300">"currency"<span class="text-slate-400">:</span> <span class="text-amber-300">"BDT"</span>,</div>
-                            <div class="pl-8 text-indigo-300">"return_url"<span class="text-slate-400">:</span> <span class="text-amber-300">"https://yoursite.com/success"</span>,</div>
-                            <div class="pl-8 text-indigo-300">"webhook_url"<span class="text-slate-400">:</span> <span class="text-amber-300">"https://yoursite.com/webhook"</span></div>
-                            <div class="pl-4"><span class="text-slate-100">}'</span></div>
-                        </div>
-
-                        <div class="px-6 py-4 bg-dark-700/60 border-t border-slate-700/80 flex items-center justify-between text-xs font-mono">
-                            <span class="text-slate-400">Response:</span>
-                            <span class="text-emerald-400 font-bold">200 OK — {"status": "success", "payment_url": "..."}</span>
+                            <div class="mt-4 rounded-2xl border border-sky-500/40 bg-gradient-to-b from-sky-900/30 to-slate-900/90 p-3.5 shadow-lg">
+                                <div class="text-[11px] leading-relaxed text-slate-300 font-mono bg-slate-950/70 p-2 rounded-lg border border-slate-800">
+                                    "You have received Tk <span class="text-emerald-400 font-bold">1,250.00</span> from 01712***901. TrxID: <span class="text-sky-300 font-bold">BK902KA1X</span>"
+                                </div>
+                                <div class="mt-3 flex items-center justify-between">
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-400">
+                                        &check; Order #4092 Verified
+                                    </span>
+                                    <span class="text-[9px] rounded-full bg-emerald-500/20 px-2 py-0.5 font-mono text-emerald-300">0.4s</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Pricing / Commission Section -->
-    <section id="pricing" class="py-24 bg-[#F8FAFC]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-xs font-extrabold text-brand-600 uppercase tracking-widest">Transparent & Flexible</span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">Zero Hidden Fees, Total Cost Transparency</h2>
-                <p class="text-slate-600 text-base mt-4">Run ElitePay on your own terms. Direct peer-to-peer settlement with zero intermediary holding.</p>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <!-- Plan 1 -->
-                <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-900">Personal & Small Business</h3>
-                        <p class="text-xs text-slate-500 mt-1">Ideal for solopreneurs & small shops</p>
-                        <div class="mt-6 mb-6">
-                            <span class="text-4xl font-extrabold text-slate-900">0%</span>
-                            <span class="text-sm font-medium text-slate-500">per transaction</span>
-                        </div>
-                        <ul class="space-y-3 text-sm text-slate-600">
-                            <li class="flex items-center gap-2">✓ bKash & Nagad Personal</li>
-                            <li class="flex items-center gap-2">✓ 1 Active Android Device</li>
-                            <li class="flex items-center gap-2">✓ Webhook Callbacks</li>
-                            <li class="flex items-center gap-2">✓ Standard Support</li>
-                        </ul>
-                    </div>
-                    <a href="<?= $site_url ?>register?plan=personal" class="mt-8 block text-center py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-sm rounded-xl transition">
-                        Get Started
-                    </a>
+        <!-- ==================== STATS COUNTER ==================== -->
+        <section class="relative z-20 -mt-10 sm:-mt-14 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100 border border-slate-200/80 rounded-2xl overflow-hidden bg-white shadow-xl dark:bg-slate-900 dark:border-slate-800 dark:divide-slate-800">
+                <div class="relative px-8 py-8">
+                    <p class="text-[11px] font-mono text-slate-400 tracking-wide mb-2 uppercase">payments.verified</p>
+                    <p class="font-mono text-3xl font-extrabold text-slate-900 dark:text-white">1,500,000<span class="text-sky-500 ml-0.5">+</span></p>
                 </div>
-
-                <!-- Plan 2 (Featured) -->
-                <div class="bg-gradient-to-b from-brand-700 to-indigo-900 text-white rounded-3xl p-8 shadow-xl relative flex flex-col justify-between transform md:-translate-y-2">
-                    <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-cyan-400 text-slate-900 text-xs font-bold uppercase tracking-wider px-3.5 py-1 rounded-full shadow">
-                        Most Popular
-                    </span>
-                    <div>
-                        <h3 class="text-xl font-bold text-white">Merchant Pro</h3>
-                        <p class="text-xs text-brand-200 mt-1">For scaling e-commerce & SaaS businesses</p>
-                        <div class="mt-6 mb-6">
-                            <span class="text-4xl font-extrabold text-white">100%</span>
-                            <span class="text-sm font-medium text-brand-200">Self-Hosted</span>
-                        </div>
-                        <ul class="space-y-3 text-sm text-brand-100">
-                            <li class="flex items-center gap-2">✓ All 45+ Gateways & Banks</li>
-                            <li class="flex items-center gap-2">✓ Unlimited Android SIM Devices</li>
-                            <li class="flex items-center gap-2">✓ Full REST API & SDKs</li>
-                            <li class="flex items-center gap-2">✓ Dynamic Payment Links & Invoices</li>
-                            <li class="flex items-center gap-2">✓ 2FA Security & Domain Whitelisting</li>
-                        </ul>
-                    </div>
-                    <a href="<?= $site_url ?>register?plan=merchant-pro" class="mt-8 block text-center py-3 bg-white hover:bg-slate-100 text-brand-800 font-extrabold text-sm rounded-xl shadow transition">
-                        Start Deploying
-                    </a>
+                <div class="relative px-8 py-8">
+                    <p class="text-[11px] font-mono text-slate-400 tracking-wide mb-2 uppercase">volume.total</p>
+                    <p class="font-mono text-3xl font-extrabold text-slate-900 dark:text-white">৳ 250M<span class="text-sky-500 ml-0.5">+</span></p>
                 </div>
-
-                <!-- Plan 3 -->
-                <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-900">Custom Enterprise</h3>
-                        <p class="text-xs text-slate-500 mt-1">For corporate fintechs & high-volume merchants</p>
-                        <div class="mt-6 mb-6">
-                            <span class="text-4xl font-extrabold text-slate-900">Custom</span>
-                            <span class="text-sm font-medium text-slate-500">Infrastructure</span>
-                        </div>
-                        <ul class="space-y-3 text-sm text-slate-600">
-                            <li class="flex items-center gap-2">✓ Multi-Tenant Brand Management</li>
-                            <li class="flex items-center gap-2">✓ High-Availability Server Setup</li>
-                            <li class="flex items-center gap-2">✓ Custom Gateway Plugin Development</li>
-                            <li class="flex items-center gap-2">✓ 24/7 Priority Engineering SLA</li>
-                        </ul>
-                    </div>
-                    <a href="<?= $site_url ?>register?plan=enterprise" class="mt-8 block text-center py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-sm rounded-xl transition">
-                        Contact Sales
-                    </a>
+                <div class="relative px-8 py-8">
+                    <p class="text-[11px] font-mono text-slate-400 tracking-wide mb-2 uppercase">businesses.active</p>
+                    <p class="font-mono text-3xl font-extrabold text-slate-900 dark:text-white">500<span class="text-sky-500 ml-0.5">+</span></p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Call To Action Banner -->
-    <section class="py-20 bg-gradient-to-r from-brand-700 via-brand-600 to-cyan-700 text-white relative overflow-hidden">
-        <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
-            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-                Ready to Automate Your Business Payments?
-            </h2>
-            <p class="text-brand-100 text-base sm:text-lg max-w-2xl mx-auto mt-4 mb-8">
-                Deploy ElitePay on your server in minutes. Empower your customers with seamless, instantaneous payment experiences.
-            </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="<?= $site_url ?>register" class="w-full sm:w-auto px-8 py-4 bg-white text-brand-800 rounded-2xl font-extrabold text-base hover:bg-slate-100 shadow-xl transition">
-                    Access Portal Now
-                </a>
-                <a href="#how-it-works" class="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 text-white rounded-2xl font-bold text-base border border-white/20 transition">
-                    Learn More
-                </a>
+
+        <!-- ==================== BRAND MARQUEE ==================== -->
+        <section class="border-y border-slate-200 bg-white py-6 text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:text-white overflow-hidden mt-16">
+            <div class="relative w-full overflow-hidden flex items-center">
+                <div class="flex w-max animate-brand-slide items-center gap-14 whitespace-nowrap py-2">
+                    <span class="text-base font-semibold text-slate-600 dark:text-slate-300">The Elyn</span>
+                    <span class="text-base font-semibold text-slate-600 dark:text-slate-300">Think Anticlockwise</span>
+                    <span class="text-base font-semibold text-slate-600 dark:text-slate-300">Unico Hospitals PLC</span>
+                    <span class="text-base font-semibold text-slate-600 dark:text-slate-300">TryZoneX</span>
+                    <span class="text-base font-semibold text-slate-600 dark:text-slate-300">ABC Proxy</span>
+                    <span class="text-base font-semibold text-slate-600 dark:text-slate-300">SMM PRO BD</span>
+                    <span class="text-base font-semibold text-slate-600 dark:text-slate-300">Digital Product BD</span>
+                    <span class="text-base font-semibold text-slate-600 dark:text-slate-300">HeeSay Shop</span>
+                    <span class="text-base font-semibold text-slate-600 dark:text-slate-300">Fityah Quran Academy</span>
+                    <span class="text-base font-semibold text-slate-600 dark:text-slate-300">Sohel Math Care</span>
+                    <span class="text-base font-semibold text-slate-600 dark:text-slate-300">EASYSEBA</span>
+                    <span class="text-base font-semibold text-slate-600 dark:text-slate-300">IPDokan</span>
+                    <span class="text-base font-semibold text-slate-600 dark:text-slate-300">SMM NEXT</span>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+
+        <!-- ==================== PRICING ==================== -->
+        <section id="pricing" class="py-24 bg-white dark:bg-slate-950 text-slate-900 dark:text-white">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Simple Pricing — 0% Commission</h2>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Monthly</span>
+                        <div class="mt-4 text-4xl font-extrabold">৳ 100 <span class="text-sm font-normal text-slate-500">/ mo</span></div>
+                        <a href="<?= htmlspecialchars($register_url) ?>" class="mt-8 block text-center rounded-xl border border-slate-300 py-3 text-xs font-bold">Get Started</a>
+                    </div>
+
+                    <div class="rounded-3xl border-2 border-sky-500 bg-gradient-to-b from-sky-50/50 to-white p-8 shadow-xl dark:from-slate-900 dark:to-slate-900 dark:border-sky-500">
+                        <span class="text-xs font-bold uppercase tracking-wider text-sky-600">Yearly (50% OFF)</span>
+                        <div class="mt-4 text-4xl font-extrabold">৳ 600 <span class="text-sm font-normal text-slate-500">/ yr</span></div>
+                        <a href="<?= htmlspecialchars($register_url) ?>" class="mt-8 block text-center rounded-xl btn-zini-gradient py-3 text-xs font-bold text-white shadow-md">Choose Yearly &rarr;</a>
+                    </div>
+
+                    <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Lifetime</span>
+                        <div class="mt-4 text-4xl font-extrabold">৳ 2,500 <span class="text-sm font-normal text-slate-500">/ life</span></div>
+                        <a href="<?= htmlspecialchars($register_url) ?>" class="mt-8 block text-center rounded-xl border border-slate-300 py-3 text-xs font-bold">Get Lifetime</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-950 text-slate-400 py-16 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-                <!-- Col 1 -->
-                <div class="md:col-span-1">
-                    <img src="<?= $site_url ?>assets/images/elitepay-logo-light.svg" alt="ElitePay" class="h-10 w-auto mb-4">
-                    <p class="text-xs text-slate-400 leading-relaxed">
-                        Next-generation self-hosted payment automation engine. Designed for speed, security, and developer freedom.
-                    </p>
-                </div>
-
-                <!-- Col 2 -->
-                <div>
-                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Product</h4>
-                    <ul class="space-y-2 text-xs">
-                        <li><a href="#features" class="hover:text-white transition">Features</a></li>
-                        <li><a href="#gateways" class="hover:text-white transition">Supported Gateways</a></li>
-                        <li><a href="#download-app" class="hover:text-brand-400 text-brand-400 font-semibold transition">Download Mobile App (APK)</a></li>
-                        <li><a href="#pricing" class="hover:text-white transition">Pricing & Fees</a></li>
-                        <li><a href="<?= $site_url ?>login" class="hover:text-white transition">Merchant Dashboard</a></li>
-                    </ul>
-                </div>
-
-                <!-- Col 3 -->
-                <div>
-                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Developers</h4>
-                    <ul class="space-y-2 text-xs">
-                        <li><a href="#api" class="hover:text-white transition">REST API Documentation</a></li>
-                        <li><a href="#api" class="hover:text-white transition">Webhooks Guide</a></li>
-                        <li><a href="#download-app" class="hover:text-white transition">Companion App Pairing</a></li>
-                        <li><a href="<?= $site_url ?>login" class="hover:text-white transition">API Keys</a></li>
-                    </ul>
-                </div>
-
-                <!-- Col 4 -->
-                <div>
-                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Legal & Security</h4>
-                    <ul class="space-y-2 text-xs">
-                        <li><span class="text-slate-500">Privacy Policy</span></li>
-                        <li><span class="text-slate-500">Terms of Service</span></li>
-                        <li><span class="text-slate-500">Security Practices</span></li>
-                        <li><span class="text-emerald-400 flex items-center gap-1.5 mt-2">🔒 256-Bit SSL Encrypted</span></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
-                <p>&copy; <?= date('Y') ?> ElitePay. All rights reserved.</p>
-                <p class="text-slate-400">Powered by ElitePay Open Automation Platform</p>
-            </div>
-        </div>
+    <footer class="bg-[#0D0D10] text-white py-12 border-t border-slate-800 text-center text-xs text-gray-500">
+        <p>&copy; 2026 ZiNiPay. All rights reserved.</p>
     </footer>
-
-    <!-- Mobile Menu Toggle Script -->
-    <script>
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        if (mobileMenuBtn && mobileMenu) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
-    </script>
 </body>
 </html>
