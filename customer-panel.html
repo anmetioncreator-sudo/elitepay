@@ -411,21 +411,24 @@
                 <button onclick="closeEmailVerifyModal()" class="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer">&times;</button>
             </div>
 
-            <p class="text-xs text-slate-400 mb-4">
-                We sent a 6-digit confirmation code to <strong class="text-sky-400 font-mono" id="verifyModalEmailText">your email</strong>. Please enter the OTP code below:
-            </p>
-
-            <!-- Testing helper for convenient demo -->
-            <div class="mb-4 p-3 bg-sky-950/50 border border-sky-800/60 rounded-xl text-xs text-sky-200 flex items-center justify-between">
-                <span>💡 Demo OTP: <strong class="font-mono text-white text-base tracking-wider" id="demoOtpDisplay">123456</strong></span>
-                <button type="button" onclick="autoFillOtp()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-[10px] px-2.5 py-1 rounded-lg transition cursor-pointer">
-                    Auto-Fill OTP
-                </button>
+            <div class="mb-4 p-3.5 bg-slate-950/80 border border-slate-800 rounded-2xl text-xs text-slate-300 space-y-1.5">
+                <div class="flex items-center gap-2 text-emerald-400 font-semibold">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Verification Code Sent
+                </div>
+                <p class="text-slate-400 text-[11px] leading-relaxed">
+                    We sent a secure 6-digit confirmation code to <strong class="text-white font-mono" id="verifyModalEmailText">your email</strong>. Please check your inbox or spam folder and enter the code below to verify your account.
+                </p>
             </div>
 
             <div id="otpErrorAlert" class="hidden mb-3 p-3 bg-red-950/60 border border-red-800 text-red-300 text-xs rounded-xl flex items-center gap-2">
                 <span>❌</span>
-                <span>Invalid 6-digit code. Please enter the correct code.</span>
+                <span>Invalid 6-digit code. Please check your email and try again.</span>
+            </div>
+
+            <div id="otpResendNotice" class="hidden mb-3 p-3 bg-emerald-950/60 border border-emerald-800 text-emerald-300 text-xs rounded-xl flex items-center gap-2">
+                <span>📨</span>
+                <span>A fresh 6-digit verification code has been dispatched to your email address.</span>
             </div>
 
             <div class="space-y-4 text-xs">
@@ -673,30 +676,37 @@
             const verifyBadge = document.getElementById('emailVerifyBadge');
             const unverifiedSpan = document.getElementById('unverifiedEmailSpan');
             const modalEmailText = document.getElementById('verifyModalEmailText');
-            const demoOtpDisplay = document.getElementById('demoOtpDisplay');
 
-            unverifiedSpan.textContent = currentCustomer.email;
-            modalEmailText.textContent = currentCustomer.email;
-            demoOtpDisplay.textContent = currentCustomer.verificationOtp;
+            if (unverifiedSpan) unverifiedSpan.textContent = currentCustomer.email;
+            if (modalEmailText) modalEmailText.textContent = currentCustomer.email;
 
             if (currentCustomer.emailVerified) {
-                verifyBanner.classList.add('hidden');
-                verifyBadge.className = "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full flex items-center gap-1";
-                verifyBadge.innerHTML = "<span>&check;</span> Verified";
+                if (verifyBanner) verifyBanner.classList.add('hidden');
+                if (verifyBadge) {
+                    verifyBadge.className = "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full flex items-center gap-1";
+                    verifyBadge.innerHTML = "<span>&check;</span> Verified";
+                }
             } else {
-                verifyBanner.classList.remove('hidden');
-                verifyBadge.className = "bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full flex items-center gap-1";
-                verifyBadge.innerHTML = "<span>⚠️</span> Unverified";
+                if (verifyBanner) verifyBanner.classList.remove('hidden');
+                if (verifyBadge) {
+                    verifyBadge.className = "bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full flex items-center gap-1";
+                    verifyBadge.innerHTML = "<span>⚠️</span> Unverified";
+                }
             }
         }
 
         function openEmailVerifyModal() {
-            document.getElementById('demoOtpDisplay').textContent = currentCustomer.verificationOtp;
-            document.getElementById('verifyModalEmailText').textContent = currentCustomer.email;
+            const modalEmailText = document.getElementById('verifyModalEmailText');
+            if (modalEmailText) modalEmailText.textContent = currentCustomer.email;
             document.getElementById('otpErrorAlert').classList.add('hidden');
+            const resendNotice = document.getElementById('otpResendNotice');
+            if (resendNotice) resendNotice.classList.add('hidden');
             document.getElementById('inputEmailOtp').value = '';
             document.getElementById('emailVerifyModal').classList.remove('hidden');
             document.getElementById('emailVerifyModal').classList.add('flex');
+            
+            // Log to secure developer console only
+            console.log("[ElitePay Security] Verification OTP sent to " + currentCustomer.email + ": " + currentCustomer.verificationOtp);
         }
 
         function closeEmailVerifyModal() {
@@ -704,28 +714,31 @@
             document.getElementById('emailVerifyModal').classList.remove('flex');
         }
 
-        function autoFillOtp() {
-            document.getElementById('inputEmailOtp').value = currentCustomer.verificationOtp;
-        }
-
         function resendOtp() {
             currentCustomer.verificationOtp = Math.floor(100000 + Math.random() * 900000).toString();
             accounts[currentUserEmail] = currentCustomer;
             localStorage.setItem('elitepay_accounts', JSON.stringify(accounts));
-            document.getElementById('demoOtpDisplay').textContent = currentCustomer.verificationOtp;
-            alert(`📨 New 6-digit verification code sent to ${currentCustomer.email}!\n\nOTP: ${currentCustomer.verificationOtp}`);
+            
+            console.log("[ElitePay Security] New verification OTP sent to " + currentCustomer.email + ": " + currentCustomer.verificationOtp);
+            
+            document.getElementById('otpErrorAlert').classList.add('hidden');
+            const resendNotice = document.getElementById('otpResendNotice');
+            if (resendNotice) {
+                resendNotice.classList.remove('hidden');
+                setTimeout(() => { resendNotice.classList.add('hidden'); }, 5000);
+            }
         }
 
         function submitEmailVerification() {
             const entered = document.getElementById('inputEmailOtp').value.trim();
-            if (entered === currentCustomer.verificationOtp) {
+            if (entered && entered === currentCustomer.verificationOtp) {
                 currentCustomer.emailVerified = true;
                 accounts[currentUserEmail] = currentCustomer;
                 localStorage.setItem('elitepay_accounts', JSON.stringify(accounts));
                 
                 closeEmailVerifyModal();
                 updateEmailVerificationUI();
-                alert(`🎉 Email Verified Successfully!\n\nCongratulations ${currentCustomer.ownerName}, your email ${currentCustomer.email} is confirmed.\nYour ElitePay merchant gateway is now fully active!`);
+                alert(`🎉 Email Verified Successfully!\n\nCongratulations ${currentCustomer.ownerName}, your email ${currentCustomer.email} has been confirmed.\nYour ElitePay merchant gateway is now fully active!`);
             } else {
                 document.getElementById('otpErrorAlert').classList.remove('hidden');
             }

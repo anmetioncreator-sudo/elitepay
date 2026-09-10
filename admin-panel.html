@@ -576,24 +576,7 @@
             const m = merchants.find(item => item.id === currentActiveMerchantId);
             if (m) {
                 m.status = m.status === 'Active' ? 'Suspended' : 'Active';
-                let storedAccs = {}; 
-        try { storedAccs = JSON.parse(localStorage.getItem('elitepay_accounts')) || {}; } catch(e){} 
-        Object.keys(storedAccs).forEach((email, idx) => { 
-            const a = storedAccs[email]; 
-            merchants.unshift({ 
-                id: "dyn_" + idx, 
-                key: email, 
-                store: a.storeName || (a.ownerName + " Store"), 
-                owner: a.ownerName || "Merchant", 
-                email: a.email, 
-                plan: a.plan || "3-Day Free Trial", 
-                volume: parseFloat((a.totalSales || "0").replace(/[^0-9.]/g, '')) || 0, 
-                devices: 1, 
-                status: a.isTrial ? "Active (Trial)" : "Active (Paid)", 
-                date: new Date(a.createdAt || Date.now()).toISOString().split('T')[0] 
-            }); 
-        });
-        renderMerchants(merchants);
+                renderMerchants(merchants);
                 closeMerchantModal();
             }
         }
@@ -618,6 +601,28 @@
             sessionStorage.clear();
             window.location.href = 'login.html';
         }
+
+        // Load dynamically registered accounts from localStorage into Platform Owner's list
+        let storedAccs = {};
+        try {
+            storedAccs = JSON.parse(localStorage.getItem('elitepay_accounts')) || {};
+        } catch(e) {}
+        
+        Object.keys(storedAccs).forEach((email, idx) => {
+            const a = storedAccs[email];
+            merchants.unshift({
+                id: "dyn_" + idx,
+                key: email,
+                store: a.storeName || (a.ownerName + " Store"),
+                owner: a.ownerName || "Merchant",
+                email: a.email,
+                plan: a.plan || "3-Day Free Trial",
+                volume: parseFloat((a.totalSales || "0").replace(/[^0-9.]/g, '')) || 0,
+                devices: 1,
+                status: a.emailVerified ? "Verified (Active)" : "Pending Email Verification",
+                date: new Date(a.createdAt || Date.now()).toISOString().split('T')[0]
+            });
+        });
 
         // Initial Load
         renderMerchants(merchants);
