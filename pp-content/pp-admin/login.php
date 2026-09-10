@@ -23,9 +23,9 @@ if ($global_user_login == true) {
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="author" content="QubePlug Bangladesh">
+    <meta name="author" content="ElitePay">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Login - PipraPay</title>
+    <title>Login - ElitePay</title>
     <link rel="shortcut icon" href="<?= $piprapay_favicon ?? '' ?>">
     <link rel="stylesheet" href="<?php echo $site_url ?>assets/css/tabler.min.css?v=1.5" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler-vendors.min.css" />
@@ -46,18 +46,18 @@ if ($global_user_login == true) {
     <div class="page page-center">
         <div class="container container-tight py-4">
             <div class="text-center mb-4">
-                <img src="<?= $piprapay_logo_light ?? '' ?>" alt="" style=" height: 40px; ">
+                <a href="<?= $site_url ?>"><img src="<?= $piprapay_logo_light ?? '' ?>" alt="ElitePay" style=" height: 42px; "></a>
             </div>
             <div class="card card-md">
                 <div class="card-body">
-                    <h2 class="h2 text-center mb-4">Login to your account</h2>
+                    <h2 class="h2 text-center mb-4">Login to ElitePay</h2>
                     <form action="" class="form-method">
                         <input type="hidden" name="action" value="login">
                         <input type="hidden" name="csrf_token" value="<?= $csrf_token; ?>">
 
                         <div class="mb-3">
                             <label class="form-label">Email or Username</label>
-                            <input type="text" class="form-control" name="username" placeholder="Enter email or username" value="<?php echo isset($pp_demo_mode) ? "demo@piprapay.com" : ""; ?>" required>
+                            <input type="text" class="form-control" name="username" placeholder="Enter email or username" value="<?php echo isset($pp_demo_mode) ? "demo@elitepay.com" : ""; ?>" required>
                         </div>
                         <div class="mb-2">
                             <label class="form-label">
@@ -94,6 +94,9 @@ if ($global_user_login == true) {
                         </div>
                     </form>
                 </div>
+            </div>
+            <div class="text-center text-secondary mt-3">
+                Don't have a merchant account? <a href="<?php echo $site_url ?>register" class="text-primary font-weight-bold">Register Now</a>
             </div>
         </div>
     </div>

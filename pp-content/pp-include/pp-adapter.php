@@ -239,11 +239,21 @@ aa021689e729dc2302b47e9bdc7d1a9f8b72f95f01530da35bf3b848b188d5b1
         'version_channel' => 'beta'
     ];
 
-    $piprapay_favicon= 'https://piprapay.com/assets/images/favicon.png';
-    $piprapay_logo_light = 'https://cdn.piprapay.com/media/logo.png';
+    $directory = '';
+    if (isset($_SERVER['SCRIPT_NAME'])) {
+        $scriptDir = trim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/');
+        if (!empty($scriptDir)) {
+            $directory = $scriptDir . '/';
+        }
+    }
+    $site_url = rtrim(pp_site_url('fulldomain'), '/') . '/' . $directory;
 
-    $directory = (pp_site_url('fulldomain') == 'http://localhost') ? 'piprapay-panel/' : '';
-    $site_url = pp_site_url('fulldomain').'/'.$directory;
+    $elitepay_favicon = $site_url . 'assets/images/elitepay-favicon.svg';
+    $elitepay_logo_light = $site_url . 'assets/images/elitepay-logo-light.svg';
+    $elitepay_logo_dark = $site_url . 'assets/images/elitepay-logo-dark.svg';
+    $piprapay_favicon = $elitepay_favicon;
+    $piprapay_logo_light = $elitepay_logo_light;
+    $piprapay_logo_dark = $elitepay_logo_dark;
 
     if(isset($_GET['logout'])){
         logoutCookie();

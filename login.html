@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="ElitePay">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login - ElitePay</title>
+    <link rel="shortcut icon" href="assets/images/elitepay-favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/tabler.min.css?v=1.5" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler-vendors.min.css" />
+
+    <style>
+      @import url("assets/css/inter.css");
+      :root{
+          --tblr-font-monospace: Monaco, Consolas, Liberation Mono, Courier New, monospace;
+          --tblr-font-sans-serif: Inter Var, Inter, -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+      }
+    </style>
+</head>
+<body class="d-flex flex-column bg-light">
+    <div class="page page-center">
+        <div class="container container-tight py-4">
+            <div class="text-center mb-4">
+                <a href="./"><img src="assets/images/elitepay-logo-dark.svg" alt="ElitePay" style="height: 44px;"></a>
+            </div>
+            <div class="card card-md shadow-sm">
+                <div class="card-body">
+                    <h2 class="h2 text-center mb-4">Login to ElitePay</h2>
+
+                    <div class="alert alert-info d-flex align-items-center mb-3" role="alert">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"><path d="M12 9h.01" /><path d="M11 12h1v4h1" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
+                        <small>Online Vercel Demo Preview. Database authentication is active on your cPanel live installation.</small>
+                    </div>
+
+                    <form action="#" method="POST" id="loginForm">
+                        <div class="mb-3">
+                            <label class="form-label">Email or Username</label>
+                            <input type="text" class="form-control" name="username" placeholder="demo@elitepay.com" value="admin@elitepay.com" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">
+                                Password
+                            </label>
+                            <div class="input-group input-group-flat">
+                                <input type="password" class="form-control password-input" name="password" value="12345678" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 mt-2">
+                            <label class="form-check">
+                                <input type="checkbox" class="form-check-input" checked>
+                                <span class="form-check-label">Remember me on this device</span>
+                            </label>
+                        </div>
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-primary w-100">Sign in (Demo)</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="text-center text-secondary mt-3">
+                Don't have a merchant account? <a href="register" class="text-primary font-weight-bold">Register Now</a>
+            </div>
+            <div class="text-center text-secondary mt-2">
+                <a href="./" class="text-muted small">&larr; Back to ElitePay Website</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("ElitePay Vercel Demo:\n\nThis is a frontend preview of the ElitePay merchant portal.\nFor the full database-connected dashboard with SMS sync, deploy the 'elitepay-cpanel-ready.zip' package to your cPanel hosting!");
+        });
+    </script>
+</body>
+</html>

@@ -190,20 +190,23 @@
 
                 <!-- Info Alert -->
                 <div class="alert alert-info" role="alert">
-                    <p class="m-0">
-                        Download the <strong>PipraPay Companion App</strong> (
-                            <a href="https://play.google.com/store/apps/details?id=com.qubeplug.billpax_tools"
-                            target="_blank"
-                            class="alert-link">
-                                Android
-                            </a>
-                            )
-                            on your mobile device to connect it with your account.
+                    <p class="m-0 mb-2">
+                        Install the <strong>ElitePay Companion App</strong> on your Android phone to auto-forward incoming payment SMS (bKash, Nagad, Rocket, Upay):
                     </p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="<?php echo $site_url; ?>assets/apps/elitepay-companion.apk" class="btn btn-sm btn-primary" download>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon me-1"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path><polyline points="7 11 12 16 17 11"></polyline><line x1="12" y1="4" x2="12" y2="16"></line></svg>
+                            Direct APK Download
+                        </a>
+                        <a href="https://play.google.com/store/apps/details?id=com.qubeplug.billpax_tools" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="icon me-1"><path d="M3.609 1.814L13.793 12 3.61 22.186a2.02 2.02 0 0 1-.61-.399 2.001 2.001 0 0 1-.5-.987V3.2c0-.367.172-.734.5-1-.001 0 .285-.262.609-.386zm11.603 11.603l2.25 2.25-11.83 6.83 9.58-9.08zm2.25-2.25l-2.25 2.25-9.58-9.08 11.83 6.83zm1.414 1.414l2.828-1.632a1.996 1.996 0 0 0 0-3.464l-2.828-1.632-1.768 1.768 1.768 1.768z"/></svg>
+                            Google Play Store
+                        </a>
+                    </div>
                 </div>
 
                 <!-- QR Code Section -->
-                <p>Scan this QR code in your PipraPay Companion app to connect your device automatically:</p>
+                <p>Scan this QR code in your ElitePay Companion app to connect your device automatically:</p>
 
                 <div class="col-lg-12 text-center">
                     <div class="card d-inline-block">

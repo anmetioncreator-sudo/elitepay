@@ -127,8 +127,8 @@
 
                     insertData($db_prefix.'permission', $columns, $values);
 
-                    $columns = ['brand_id', 'created_date', 'updated_date'];
-                    $values = [$brand_id, getCurrentDatetime('Y-m-d H:i:s'), getCurrentDatetime('Y-m-d H:i:s')];
+                    $columns = ['brand_id', 'name', 'created_date', 'updated_date'];
+                    $values = [$brand_id, 'ElitePay', getCurrentDatetime('Y-m-d H:i:s'), getCurrentDatetime('Y-m-d H:i:s')];
 
                     insertData($db_prefix.'brands', $columns, $values);
 
@@ -177,9 +177,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="author" content="QubePlug Bangladesh">
+    <meta name="author" content="ElitePay">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Installer - PipraPay</title>
+    <title>Installer - ElitePay</title>
     <link rel="shortcut icon" href="<?= $piprapay_favicon ?? '' ?>">
 
     <link rel="stylesheet" href="<?php echo $site_url ?>assets/css/tabler.min.css?v=1.5" />
@@ -487,7 +487,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" style="width: 50px; height: 50px;" viewBox="0 0 24 24" fill="none" stroke="#5f38f9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M9 12l2 2l4 -4" /></svg>
                     </div>
                     <h3 class="nk-block-title mb-2">Installation Complete!</h3>
-                    <p class="mb-4">PipraPay has been successfully installed and configured.</p>
+                    <p class="mb-4">ElitePay has been successfully installed and configured.</p>
                     
                     <div class="installation-log mb-4" id="installationLog">
                         <!-- Installation log will appear here -->

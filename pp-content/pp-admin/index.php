@@ -25,9 +25,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="author" content="Softnio">
+    <meta name="author" content="ElitePay">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>PipraPay</title>
+    <title>Dashboard - ElitePay</title>
     <link rel="shortcut icon" href="<?= $piprapay_favicon ?? '' ?>">
     <link rel="stylesheet" href="<?php echo $site_url ?>assets/css/tabler.min.css?v=1.7" />
     <link rel="stylesheet" href="<?php echo $site_url ?>assets/css/choices.min.css">
@@ -443,7 +443,7 @@
                             <ul class="list-inline list-inline-dots mb-0">
                                 <li class="list-inline-item">
                                     © <?php echo date('Y');?>
-                                    <a href="https://piprapay.com/" class="link-secondary" target="blank">PipraPay</a>. All rights reserved.
+                                    <a href="<?php echo $site_url ?>" class="link-secondary">ElitePay</a>. All rights reserved.
                                 </li>
                                 <li class="list-inline-item">
                                     <a href="https://updates.piprapay.com/?version=<?php echo $piprapay_current_version['version_code'];?>" class="link-secondary" target="blank"target="blank"> <?php echo $piprapay_current_version['version_name'];?> </a>
@@ -1015,7 +1015,7 @@
                 activeLink.classList.add('active');
             }
 
-            document.title = page + ' - PipraPay';
+            document.title = page + ' - ElitePay';
         }
 
         window.addEventListener("popstate", function(event) {

@@ -1,6 +1,8 @@
 RewriteEngine On
 
 Options -Indexes
+DirectoryIndex index.php index.html
+AddType application/vnd.android.package-archive .apk
 
 RewriteCond %{THE_REQUEST} \s/+(.+?\.php)[\s?] [NC]
 RewriteCond %1 !^index\.php$

@@ -34,9 +34,9 @@
                     'name'  => 'watermark_text',
                     'label' => 'Footer Branding Text',
                     'type'  => 'text',
-                    'value' => 'Powered by BillPax',
+                    'value' => 'Powered by ElitePay',
                     'required' => false,
-                    'placeholder' => 'e.g. Powered by BillPax'
+                    'placeholder' => 'e.g. Powered by ElitePay'
                 ],
                 [
                     'name'  => 'seo_title',

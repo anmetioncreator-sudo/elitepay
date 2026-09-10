@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="ElitePay">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Create Merchant Account - ElitePay</title>
+    <link rel="shortcut icon" href="assets/images/elitepay-favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/tabler.min.css?v=1.5" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler-vendors.min.css" />
+
+    <style>
+      @import url("assets/css/inter.css");
+      :root{
+          --tblr-font-monospace: Monaco, Consolas, Liberation Mono, Courier New, monospace;
+          --tblr-font-sans-serif: Inter Var, Inter, -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+      }
+    </style>
+</head>
+<body class="d-flex flex-column bg-light">
+    <div class="page page-center">
+        <div class="container container-tight py-4">
+            <div class="text-center mb-4">
+                <a href="./"><img src="assets/images/elitepay-logo-dark.svg" alt="ElitePay" style="height: 44px;"></a>
+            </div>
+            <div class="card card-md shadow-sm">
+                <div class="card-body">
+                    <h2 class="h2 text-center mb-2">Create Merchant Account</h2>
+                    <p class="text-secondary text-center mb-4 small">Start automating bKash, Nagad & Rocket payments in minutes</p>
+
+                    <div class="alert alert-info d-flex align-items-center mb-3" role="alert">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"><path d="M12 9h.01" /><path d="M11 12h1v4h1" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
+                        <small>Online Vercel Demo Preview. Live automated onboarding and database provisioning runs on your cPanel server.</small>
+                    </div>
+
+                    <form action="#" method="POST" id="regForm">
+                        <div class="mb-3">
+                            <label class="form-label required">Your Full Name</label>
+                            <input type="text" class="form-control" placeholder="e.g. Tanvir Ahmed" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required">Business or Store Name</label>
+                            <input type="text" class="form-control" placeholder="e.g. Tanvir Shop" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label required">Username</label>
+                                <input type="text" class="form-control" placeholder="tanvir99" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label required">Email Address</label>
+                                <input type="email" class="form-control" placeholder="tanvir@shop.com" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label required">Password</label>
+                                <input type="password" class="form-control" placeholder="Min. 8 characters" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label required">Confirm Password</label>
+                                <input type="password" class="form-control" placeholder="Re-type password" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-check">
+                                <input type="checkbox" class="form-check-input" checked required>
+                                <span class="form-check-label small">I agree to the <a href="./#pricing">Terms of Service</a> & 14-day free trial.</span>
+                            </label>
+                        </div>
+
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-primary w-100">Create Account (Demo)</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="text-center text-secondary mt-3">
+                Already have an account? <a href="login" class="text-primary font-weight-bold">Sign in here</a>
+            </div>
+            <div class="text-center text-secondary mt-2">
+                <a href="./" class="text-muted small">&larr; Back to ElitePay Website</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('regForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("ElitePay Vercel Demo:\n\nMerchant registration simulation successful!\nOn your live cPanel server, this will automatically provision the new merchant's database brand, currencies, and redirect them straight to their dashboard.");
+        });
+    </script>
+</body>
+</html>

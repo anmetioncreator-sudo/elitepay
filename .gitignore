@@ -1,0 +1,11 @@
+# Environment & OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Vercel
+.vercel
+
+# Archives
+*.zip
+*.tar.gz

@@ -132,6 +132,7 @@
                         break;
 
                     case 'login':
+                    case 'register':
                     case 'forgot':
                     case '2fa':
                         if(file_exists(__DIR__ . '/pp-content/pp-admin/'.$route.'.php')){
@@ -2051,11 +2052,16 @@
                         }
                         break;
 
+                    case 'home':
                     case 'homepageRedirect':
-                        if($path_homepageRedirect == ""){
-                            echo '<script>location.href="login";</script>';
-                        }else{
+                        if(!empty($path_homepageRedirect)){
                             echo '<script>location.href="https://'.$path_homepageRedirect.'";</script>';
+                        }else{
+                            if(file_exists(__DIR__ . '/pp-content/pp-modules/pp-themes/twenty-six/home.php')){
+                                require __DIR__ . '/pp-content/pp-modules/pp-themes/twenty-six/home.php';
+                            }else{
+                                echo '<script>location.href="login";</script>';
+                            }
                         }
                         break;
                     default:

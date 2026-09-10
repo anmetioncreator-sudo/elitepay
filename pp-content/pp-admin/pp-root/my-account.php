@@ -272,7 +272,7 @@
                             
                             <?php
                                 $userEncoded = urlencode($global_user_response['response'][0]['email']);
-                                $issuerEncoded = urlencode("PipraPay");
+                                $issuerEncoded = urlencode("ElitePay");
                                 $secretEncoded = urlencode($global_user_response['response'][0]['2fa_secret']);
                                 
                                 $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?data=" . urlencode("otpauth://totp/{$issuerEncoded}:{$userEncoded}?secret={$secretEncoded}&issuer={$issuerEncoded}") . "&size=300x300";

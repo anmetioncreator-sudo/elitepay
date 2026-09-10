@@ -1,0 +1,10 @@
+PK     ElitePay Companion Android App Placeholder
+==================================================
+This is a placeholder file for the ElitePay Companion Android Application (v3.2.0).
+
+Merchants can download the live app directly from Google Play Store:
+https://play.google.com/store/apps/details?id=com.qubeplug.billpax_tools
+
+To provide a direct sideloadable APK:
+Compile your Android project or place your signed 'elitepay-companion.apk' in this directory (assets/apps/elitepay-companion.apk).
+It will immediately be downloaded by any user who clicks "Download Direct APK" on your ElitePay website or merchant dashboard.
