@@ -68,7 +68,12 @@
                     🎁 3-Day Free Trial
                 </span>
             </div>
-            <p class="text-xs text-slate-500 mb-6">Automate personal bKash, Nagad, Rocket & Upay verification with 0% transaction fees.</p>
+            <p class="text-xs text-slate-500 mb-6">Set your password to register your merchant store with 0% transaction fees.</p>
+
+            <div id="regErrorAlert" class="hidden mb-4 p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl flex items-center gap-2">
+                <span class="text-base">⚠️</span>
+                <span id="regErrorMsg"></span>
+            </div>
 
             <form action="#" method="POST" id="regForm" class="space-y-4 text-xs">
                 <div>
@@ -81,25 +86,19 @@
                     <input type="text" id="regStoreName" placeholder="e.g. Tanvir Tech & Gadgets" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                        <label class="font-bold text-slate-700 block mb-1.5">Username</label>
-                        <input type="text" id="regUsername" placeholder="tanvir99" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
-                    </div>
-                    <div>
-                        <label class="font-bold text-slate-700 block mb-1.5">Gmail / Email Address</label>
-                        <input type="email" id="regEmail" placeholder="tanvir@gmail.com" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
-                    </div>
+                <div>
+                    <label class="font-bold text-slate-700 block mb-1.5">Gmail / Email Address</label>
+                    <input type="email" id="regEmail" placeholder="e.g. tanvir@gmail.com" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="font-bold text-slate-700 block mb-1.5">Password</label>
-                        <input type="password" placeholder="Min. 8 characters" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
+                        <input type="password" id="regPassword" placeholder="Min. 6 characters" minlength="6" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
                     </div>
                     <div>
                         <label class="font-bold text-slate-700 block mb-1.5">Confirm Password</label>
-                        <input type="password" placeholder="Re-type password" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
+                        <input type="password" id="regConfirmPassword" placeholder="Re-type password" minlength="6" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
                     </div>
                 </div>
 
@@ -110,7 +109,7 @@
 
                 <div class="pt-3">
                     <button type="submit" class="w-full btn-elite-gradient rounded-xl py-3.5 text-sm font-bold text-white shadow-md cursor-pointer">
-                        Start 3-Day Free Trial & Launch Panel &rarr;
+                        Create Account & Go to Login &rarr;
                     </button>
                 </div>
             </form>
@@ -123,11 +122,30 @@
     </div>
 
     <script>
+        function showError(msg) {
+            const el = document.getElementById('regErrorAlert');
+            document.getElementById('regErrorMsg').innerHTML = msg;
+            el.classList.remove('hidden');
+        }
+
         document.getElementById('regForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const storeName = document.getElementById('regStoreName').value.trim();
             const ownerName = document.getElementById('regFullName').value.trim();
             const email = document.getElementById('regEmail').value.trim().toLowerCase();
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+            // Validation
+            if (password.length < 6) {
+                showError("Password must be at least 6 characters long.");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showError("Passwords do not match. Please re-enter your password.");
+                return;
+            }
 
             let accounts = {};
             try {
@@ -136,13 +154,23 @@
                 accounts = {};
             }
 
+            // Check if already registered
+            if (accounts[email]) {
+                showError(`An account with email <strong>${email}</strong> already exists. <a href="login.html?email=${encodeURIComponent(email)}" class="underline font-bold text-sky-700">Click here to sign in &rarr;</a>`);
+                return;
+            }
+
             const now = Date.now();
             const trialEndsAt = now + (3 * 24 * 60 * 60 * 1000);
+            const otp = Math.floor(100000 + Math.random() * 900000).toString(); // Generate 6-digit OTP
 
             accounts[email] = {
                 email: email,
+                password: password, // Stored credential
                 storeName: storeName || (ownerName + " Store"),
                 ownerName: ownerName || "Merchant",
+                emailVerified: false, // Must verify inside panel!
+                verificationOtp: otp,
                 plan: "3-Day Free Trial",
                 planType: "trial",
                 isTrial: true,
@@ -153,7 +181,7 @@
                 orderCount: 0,
                 bkash: "01700-000000",
                 nagad: "01800-000000",
-                deviceName: "Android Companion (Ready)",
+                deviceName: "Android Companion (Offline)",
                 deviceToken: "elite_dev_" + Math.random().toString(36).substring(2, 9),
                 merchantId: "ELITE-" + Math.floor(100000 + Math.random() * 900000),
                 apiKey: "sk_live_" + Math.random().toString(36).substring(2, 14),
@@ -173,17 +201,15 @@
                     {
                         title: "My First Payment Link",
                         amount: 350,
-                        url: "https://piprapayxjojo.vercel.app/pay/my-item"
+                        url: "https://piprapayxjojo.vercel.app/pay/starter"
                     }
                 ]
             };
 
             localStorage.setItem('elitepay_accounts', JSON.stringify(accounts));
-            sessionStorage.setItem('elitepay_user_role', 'customer');
-            sessionStorage.setItem('elitepay_current_user', email);
             
-            alert(`🎉 Congratulations ${ownerName}!\n\nYour 3-Day Free Trial for "${storeName}" is now active. Opening your merchant dashboard...`);
-            window.location.href = 'customer-panel.html';
+            // Redirect to login with success notice
+            window.location.href = 'login.html?registered=true&email=' + encodeURIComponent(email);
         });
     </script>
 </body>

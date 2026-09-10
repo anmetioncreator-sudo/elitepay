@@ -76,8 +76,11 @@
 
             <!-- Active User Display & Navigation -->
             <div class="hidden md:flex items-center gap-3 bg-slate-950 px-3.5 py-1.5 rounded-2xl border border-slate-800 text-xs">
-                <span class="text-slate-400">Logged in as:</span>
+                <span class="text-slate-400">Merchant:</span>
                 <span class="text-sky-400 font-mono font-bold" id="activeUserEmail">user@gmail.com</span>
+                <span id="emailVerifyBadge" class="bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <span>⚠️</span> Unverified
+                </span>
                 <a href="admin-panel.html" class="text-amber-400 hover:text-amber-300 font-bold px-2 py-0.5 rounded-lg border border-amber-500/30 hover:bg-amber-950/40 transition">👑 Admin View</a>
             </div>
 
@@ -97,6 +100,27 @@
     <!-- Merchant Main Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-6">
         
+        <!-- MANDATORY EMAIL VERIFICATION BANNER (Displayed if unverified) -->
+        <div id="emailVerifyBanner" class="hidden rounded-3xl bg-gradient-to-r from-red-500/20 via-orange-500/20 to-amber-500/20 border border-red-500/40 p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
+            <div class="flex items-center gap-4">
+                <div class="h-12 w-12 rounded-2xl bg-red-500/20 border border-red-500/40 flex items-center justify-center text-2xl flex-shrink-0">
+                    📧
+                </div>
+                <div>
+                    <div class="flex items-center gap-2.5 flex-wrap">
+                        <span class="font-extrabold text-red-300 text-sm">Action Required: Verify Your Email Address</span>
+                        <span class="bg-red-500 text-white font-mono font-extrabold text-[10px] px-2.5 py-0.5 rounded-full shadow-sm animate-pulse">PENDING VERIFICATION</span>
+                    </div>
+                    <p class="text-xs text-slate-300 mt-1">
+                        Please verify your email address <strong class="text-white" id="unverifiedEmailSpan">user@gmail.com</strong> to secure your account and activate automated payments.
+                    </p>
+                </div>
+            </div>
+            <button onclick="openEmailVerifyModal()" class="bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-lg whitespace-nowrap cursor-pointer hover:scale-105 transition">
+                Verify Email Now (Enter OTP) &rarr;
+            </button>
+        </div>
+
         <!-- 3-Day Free Trial Alert Banner (Visible when user has trial) -->
         <div id="trialBanner" class="rounded-3xl bg-gradient-to-r from-amber-500/15 via-sky-500/15 to-indigo-500/15 border border-amber-500/40 p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
             <div class="flex items-center gap-4">
@@ -376,6 +400,52 @@
         </div>
     </div>
 
+    <!-- Mandatory Email Verification Modal -->
+    <div id="emailVerifyModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full text-slate-200 shadow-2xl relative">
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center gap-2.5">
+                    <span class="text-2xl">📧</span>
+                    <h3 class="text-lg font-bold text-white">Verify Your Email Address</h3>
+                </div>
+                <button onclick="closeEmailVerifyModal()" class="text-slate-400 hover:text-white text-xl font-bold p-1 cursor-pointer">&times;</button>
+            </div>
+
+            <p class="text-xs text-slate-400 mb-4">
+                We sent a 6-digit confirmation code to <strong class="text-sky-400 font-mono" id="verifyModalEmailText">your email</strong>. Please enter the OTP code below:
+            </p>
+
+            <!-- Testing helper for convenient demo -->
+            <div class="mb-4 p-3 bg-sky-950/50 border border-sky-800/60 rounded-xl text-xs text-sky-200 flex items-center justify-between">
+                <span>💡 Demo OTP: <strong class="font-mono text-white text-base tracking-wider" id="demoOtpDisplay">123456</strong></span>
+                <button type="button" onclick="autoFillOtp()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-[10px] px-2.5 py-1 rounded-lg transition cursor-pointer">
+                    Auto-Fill OTP
+                </button>
+            </div>
+
+            <div id="otpErrorAlert" class="hidden mb-3 p-3 bg-red-950/60 border border-red-800 text-red-300 text-xs rounded-xl flex items-center gap-2">
+                <span>❌</span>
+                <span>Invalid 6-digit code. Please enter the correct code.</span>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                <div>
+                    <label class="font-bold text-slate-300 block mb-1.5">Enter 6-Digit OTP Code</label>
+                    <input type="text" id="inputEmailOtp" maxlength="6" placeholder="• • • • • •" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-center text-xl font-mono tracking-widest text-white focus:border-sky-500 focus:outline-none"/>
+                </div>
+
+                <div class="flex gap-2 pt-1">
+                    <button type="button" onclick="resendOtp()" class="w-1/3 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-3 rounded-xl cursor-pointer">
+                        Resend Code
+                    </button>
+                    <button type="button" onclick="submitEmailVerification()" class="w-2/3 btn-elite-gradient text-white font-bold py-3 rounded-xl shadow-lg cursor-pointer">
+                        Confirm & Verify &rarr;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Upgrade Subscription Modal -->
     <div id="upgradeModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-2xl w-full text-slate-200 shadow-2xl relative">
@@ -475,10 +545,14 @@
     </div>
 
     <script>
-        // Current Logged In User
-        let currentUserEmail = sessionStorage.getItem('elitepay_current_user') || 'user@gmail.com';
+        // Check active login session
+        let currentUserEmail = sessionStorage.getItem('elitepay_current_user');
+        if (!currentUserEmail) {
+            // Not authenticated, redirect to login
+            window.location.href = 'login.html';
+        }
 
-        // Read or Seed Accounts from localStorage
+        // Read Accounts from localStorage
         let accounts = {};
         try {
             accounts = JSON.parse(localStorage.getItem('elitepay_accounts')) || {};
@@ -486,18 +560,22 @@
             accounts = {};
         }
 
-        // If no accounts in localStorage, provision default trial account for this user
+        // If user account is missing, create a starter account
         if (!accounts[currentUserEmail]) {
             const namePrefix = currentUserEmail.split('@')[0].replace(/[^a-zA-Z0-9]/g, ' ');
             const storeName = namePrefix.charAt(0).toUpperCase() + namePrefix.slice(1) + " Store";
             const ownerName = namePrefix.charAt(0).toUpperCase() + namePrefix.slice(1);
             const now = Date.now();
             const trialEndsAt = now + (3 * 24 * 60 * 60 * 1000); // 3-Day Free Trial
+            const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
             accounts[currentUserEmail] = {
                 email: currentUserEmail,
+                password: "password123",
                 storeName: storeName,
                 ownerName: ownerName,
+                emailVerified: false,
+                verificationOtp: otp,
                 plan: "3-Day Free Trial",
                 planType: "trial",
                 isTrial: true,
@@ -536,6 +614,13 @@
         }
 
         let currentCustomer = accounts[currentUserEmail];
+
+        // Ensure OTP exists
+        if (!currentCustomer.verificationOtp) {
+            currentCustomer.verificationOtp = Math.floor(100000 + Math.random() * 900000).toString();
+            accounts[currentUserEmail] = currentCustomer;
+            localStorage.setItem('elitepay_accounts', JSON.stringify(accounts));
+        }
 
         // Load Customer State into DOM
         function loadCustomerView(cust) {
@@ -577,6 +662,73 @@
 
             // Update Trial Timer & Banner
             updateTrialTimer();
+
+            // Update Email Verification UI
+            updateEmailVerificationUI();
+        }
+
+        // Email Verification Logic
+        function updateEmailVerificationUI() {
+            const verifyBanner = document.getElementById('emailVerifyBanner');
+            const verifyBadge = document.getElementById('emailVerifyBadge');
+            const unverifiedSpan = document.getElementById('unverifiedEmailSpan');
+            const modalEmailText = document.getElementById('verifyModalEmailText');
+            const demoOtpDisplay = document.getElementById('demoOtpDisplay');
+
+            unverifiedSpan.textContent = currentCustomer.email;
+            modalEmailText.textContent = currentCustomer.email;
+            demoOtpDisplay.textContent = currentCustomer.verificationOtp;
+
+            if (currentCustomer.emailVerified) {
+                verifyBanner.classList.add('hidden');
+                verifyBadge.className = "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full flex items-center gap-1";
+                verifyBadge.innerHTML = "<span>&check;</span> Verified";
+            } else {
+                verifyBanner.classList.remove('hidden');
+                verifyBadge.className = "bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full flex items-center gap-1";
+                verifyBadge.innerHTML = "<span>⚠️</span> Unverified";
+            }
+        }
+
+        function openEmailVerifyModal() {
+            document.getElementById('demoOtpDisplay').textContent = currentCustomer.verificationOtp;
+            document.getElementById('verifyModalEmailText').textContent = currentCustomer.email;
+            document.getElementById('otpErrorAlert').classList.add('hidden');
+            document.getElementById('inputEmailOtp').value = '';
+            document.getElementById('emailVerifyModal').classList.remove('hidden');
+            document.getElementById('emailVerifyModal').classList.add('flex');
+        }
+
+        function closeEmailVerifyModal() {
+            document.getElementById('emailVerifyModal').classList.add('hidden');
+            document.getElementById('emailVerifyModal').classList.remove('flex');
+        }
+
+        function autoFillOtp() {
+            document.getElementById('inputEmailOtp').value = currentCustomer.verificationOtp;
+        }
+
+        function resendOtp() {
+            currentCustomer.verificationOtp = Math.floor(100000 + Math.random() * 900000).toString();
+            accounts[currentUserEmail] = currentCustomer;
+            localStorage.setItem('elitepay_accounts', JSON.stringify(accounts));
+            document.getElementById('demoOtpDisplay').textContent = currentCustomer.verificationOtp;
+            alert(`📨 New 6-digit verification code sent to ${currentCustomer.email}!\n\nOTP: ${currentCustomer.verificationOtp}`);
+        }
+
+        function submitEmailVerification() {
+            const entered = document.getElementById('inputEmailOtp').value.trim();
+            if (entered === currentCustomer.verificationOtp) {
+                currentCustomer.emailVerified = true;
+                accounts[currentUserEmail] = currentCustomer;
+                localStorage.setItem('elitepay_accounts', JSON.stringify(accounts));
+                
+                closeEmailVerifyModal();
+                updateEmailVerificationUI();
+                alert(`🎉 Email Verified Successfully!\n\nCongratulations ${currentCustomer.ownerName}, your email ${currentCustomer.email} is confirmed.\nYour ElitePay merchant gateway is now fully active!`);
+            } else {
+                document.getElementById('otpErrorAlert').classList.remove('hidden');
+            }
         }
 
         // Real-Time Countdown Timer for 3-Day Free Trial
@@ -729,6 +881,12 @@
 
         // Live Test Simulation: Instantly Receive a Payment into this Customer's Panel!
         function simulateIncomingPayment() {
+            if (!currentCustomer.emailVerified) {
+                alert("⚠️ Please verify your email first before accepting live payments!");
+                openEmailVerifyModal();
+                return;
+            }
+
             const randomTrx = "BK" + Math.floor(10000000 + Math.random() * 90000000) + "X";
             const newTrx = {
                 id: randomTrx,
@@ -757,6 +915,11 @@
 
         // Create Payment Link
         function openNewPaymentLinkModal() {
+            if (!currentCustomer.emailVerified) {
+                alert("⚠️ Please verify your email first before creating payment links!");
+                openEmailVerifyModal();
+                return;
+            }
             document.getElementById('newLinkModal').classList.remove('hidden');
             document.getElementById('newLinkModal').classList.add('flex');
         }
@@ -790,6 +953,11 @@
         }
 
         function copyApiKey() {
+            if (!currentCustomer.emailVerified) {
+                alert("⚠️ Please verify your email first to access your live API Key!");
+                openEmailVerifyModal();
+                return;
+            }
             navigator.clipboard.writeText(document.getElementById('custApiKey').value);
             alert("API Key copied to clipboard!");
         }
@@ -817,6 +985,13 @@
 
         // Initial Load
         loadCustomerView(currentCustomer);
+        
+        // Auto-prompt email verification if unverified
+        if (!currentCustomer.emailVerified) {
+            setTimeout(() => {
+                openEmailVerifyModal();
+            }, 800);
+        }
     </script>
 </body>
 </html>

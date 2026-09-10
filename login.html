@@ -60,14 +60,29 @@
             <p class="text-xs text-slate-500 mt-1">Smart Payment Automation Portal</p>
         </div>
 
+        <!-- Registration Success Notification (if redirected after creating account) -->
+        <div id="regSuccessAlert" class="hidden mb-4 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-2xl shadow-sm flex items-start gap-3">
+            <span class="text-lg">🎉</span>
+            <div>
+                <strong class="font-bold">Account created successfully!</strong>
+                <p class="text-emerald-700 mt-0.5">Please enter your password below to sign in to your merchant dashboard.</p>
+            </div>
+        </div>
+
+        <!-- Login Error Alert -->
+        <div id="loginErrorAlert" class="hidden mb-4 p-4 bg-red-50 border border-red-200 text-red-800 text-xs rounded-2xl shadow-sm flex items-start gap-3">
+            <span class="text-lg">⚠️</span>
+            <div id="loginErrorMsg"></div>
+        </div>
+
         <!-- Login Card -->
         <div class="bg-white rounded-3xl border border-slate-200/80 p-8 shadow-xl shadow-sky-950/5">
             <h2 class="text-2xl font-bold text-slate-900 text-center mb-1.5">Sign In to Your Account</h2>
-            <p class="text-xs text-slate-500 text-center mb-6">Enter your Gmail or Email to open your merchant panel</p>
+            <p class="text-xs text-slate-500 text-center mb-6">Enter your email and password to open your panel</p>
 
             <form action="#" method="POST" id="loginForm" class="space-y-4 text-xs">
                 <div>
-                    <label class="font-bold text-slate-700 block mb-1.5">Gmail or Email Address</label>
+                    <label class="font-bold text-slate-700 block mb-1.5">Email Address</label>
                     <input type="email" id="inputUsername" name="username" placeholder="e.g. yourname@gmail.com" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
                 </div>
 
@@ -91,11 +106,11 @@
                 </div>
             </form>
 
-            <div class="mt-4 p-3 rounded-xl bg-sky-50/70 border border-sky-100 text-[11px] text-sky-900 flex items-start gap-2">
-                <span class="text-sm">🎁</span>
+            <div class="mt-4 p-3 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-600 flex items-start gap-2">
+                <span class="text-sm">🔒</span>
                 <div>
-                    <span class="font-bold">First time signing in?</span>
-                    <p class="text-slate-600 mt-0.5">Any Gmail entered automatically receives a <span class="font-bold text-sky-700">3-Day Free Trial</span> with full access to automated personal bKash/Nagad verification!</p>
+                    <span class="font-bold text-slate-800">Security Requirement:</span>
+                    <p class="mt-0.5">Don't have an account yet? You must first <a href="register.html" class="text-sky-600 font-bold underline">create an account with a password</a> to access the merchant panel.</p>
                 </div>
             </div>
         </div>
@@ -107,20 +122,47 @@
     </div>
 
     <script>
+        // Check URL query parameters for registration redirect
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('registered') === 'true') {
+            document.getElementById('regSuccessAlert').classList.remove('hidden');
+            if (urlParams.get('email')) {
+                document.getElementById('inputUsername').value = urlParams.get('email');
+            }
+        }
+
+        function showLoginError(htmlMsg) {
+            const el = document.getElementById('loginErrorAlert');
+            document.getElementById('loginErrorMsg').innerHTML = htmlMsg;
+            el.classList.remove('hidden');
+        }
+
+        function hideLoginError() {
+            document.getElementById('loginErrorAlert').classList.add('hidden');
+        }
+
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            hideLoginError();
+            
             const email = document.getElementById('inputUsername').value.trim().toLowerCase();
-            if (!email) return;
+            const password = document.getElementById('inputPassword').value;
+            if (!email || !password) return;
 
-            // Check if Superadmin / Platform Owner
+            // 1. Superadmin / Platform Owner Login Check
             if (email.includes('admin') || email.includes('owner')) {
-                sessionStorage.setItem('elitepay_user_role', 'admin');
-                sessionStorage.setItem('elitepay_current_user', email);
-                window.location.href = 'admin-panel.html';
-                return;
+                if (password === '12345678' || password === 'admin123') {
+                    sessionStorage.setItem('elitepay_user_role', 'admin');
+                    sessionStorage.setItem('elitepay_current_user', email);
+                    window.location.href = 'admin-panel.html';
+                    return;
+                } else {
+                    showLoginError('<strong>Incorrect password.</strong> Please enter the correct master admin password.');
+                    return;
+                }
             }
 
-            // Customer Accounts Storage
+            // 2. Customer / Merchant Login Check
             let accounts = {};
             try {
                 accounts = JSON.parse(localStorage.getItem('elitepay_accounts')) || {};
@@ -128,55 +170,23 @@
                 accounts = {};
             }
 
-            // If account doesn't exist yet, auto-provision with 3-Day Free Trial
+            // Security: If account does NOT exist in registered accounts, REJECT login!
             if (!accounts[email]) {
-                const namePrefix = email.split('@')[0].replace(/[^a-zA-Z0-9]/g, ' ');
-                const storeName = namePrefix.charAt(0).toUpperCase() + namePrefix.slice(1) + " Store";
-                const ownerName = namePrefix.charAt(0).toUpperCase() + namePrefix.slice(1);
-                const now = Date.now();
-                const trialEndsAt = now + (3 * 24 * 60 * 60 * 1000); // 3 Days in milliseconds
-
-                accounts[email] = {
-                    email: email,
-                    storeName: storeName,
-                    ownerName: ownerName,
-                    plan: "3-Day Free Trial",
-                    planType: "trial",
-                    isTrial: true,
-                    trialEndsAt: trialEndsAt,
-                    createdAt: now,
-                    todaySales: "৳ 0.00",
-                    totalSales: "৳ 0.00",
-                    orderCount: 0,
-                    bkash: "01700-000000",
-                    nagad: "01800-000000",
-                    deviceName: "Android Companion (Ready)",
-                    deviceToken: "elite_dev_" + Math.random().toString(36).substring(2, 9),
-                    merchantId: "ELITE-" + Math.floor(100000 + Math.random() * 900000),
-                    apiKey: "sk_live_" + Math.random().toString(36).substring(2, 14),
-                    webhookUrl: "https://" + email.split('@')[0] + ".com/api/payment-webhook",
-                    transactions: [
-                        {
-                            id: "BK" + Math.floor(10000000 + Math.random() * 90000000) + "X",
-                            invoice: "INV-101",
-                            gateway: "bKash",
-                            phone: "01755-123***",
-                            amount: "৳ 500.00",
-                            status: "Verified",
-                            time: "Sample Demo"
-                        }
-                    ],
-                    links: [
-                        {
-                            title: "Starter Product Checkout",
-                            amount: 500,
-                            url: "https://piprapayxjojo.vercel.app/pay/starter-product"
-                        }
-                    ]
-                };
-                localStorage.setItem('elitepay_accounts', JSON.stringify(accounts));
+                showLoginError(`
+                    <strong>Account not found!</strong><br/>
+                    No registered account exists for "${email}". You must first create an account and password.<br/>
+                    <a href="register.html" class="inline-block mt-2 font-bold text-sky-600 underline">Click here to Create Account &rarr;</a>
+                `);
+                return;
             }
 
+            // Security: Check Password Match
+            if (accounts[email].password !== password) {
+                showLoginError('<strong>Incorrect password.</strong> The password you entered does not match our records for this email.');
+                return;
+            }
+
+            // Authentication successful
             sessionStorage.setItem('elitepay_user_role', 'customer');
             sessionStorage.setItem('elitepay_current_user', email);
             window.location.href = 'customer-panel.html';
