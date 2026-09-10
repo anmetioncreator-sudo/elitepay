@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Platform Owner & Admin Panel - ZiniPay</title>
+    <link rel="shortcut icon" href="assets/images/elitepay-favicon.svg" type="image/svg+xml"/>
+    
+    <!-- Google Fonts: Poppins & Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sky: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        },
+                        slate: {
+                            950: '#071426',
+                            900: '#0b1324',
+                            850: '#0f1a32',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        mono: ['"Fira Code"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .btn-zini-gradient {
+            background: linear-gradient(90deg, #007aff 0%, #5bc0ff 50%, #007aff 100%);
+            background-size: 200% auto;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.25);
+        }
+        .btn-zini-gradient:hover {
+            background-position: right center;
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.35);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            
+            <!-- Left Brand -->
+            <div class="flex items-center gap-3">
+                <a href="./" class="flex items-center gap-2.5">
+                    <span class="flex h-9 w-9 items-center justify-center rounded-full bg-sky-600 text-white font-bold shadow-md">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                    </span>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-extrabold text-lg tracking-tight text-white">ZiniPay</span>
+                            <span class="bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">OWNER ADMIN</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Fast Role Switcher for Testing -->
+            <div class="hidden md:flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-2xl border border-slate-800 text-xs">
+                <span class="text-slate-400 font-medium">Switch View:</span>
+                <span class="bg-sky-600 text-white font-bold px-2.5 py-1 rounded-xl">👑 Admin Owner</span>
+                <button onclick="switchToCustomer('tanvir')" class="text-slate-300 hover:text-white hover:bg-slate-800 px-2.5 py-1 rounded-xl transition cursor-pointer">👤 Customer 1 (Tanvir)</button>
+                <button onclick="switchToCustomer('ayesha')" class="text-slate-300 hover:text-white hover:bg-slate-800 px-2.5 py-1 rounded-xl transition cursor-pointer">👤 Customer 2 (Ayesha)</button>
+            </div>
+
+            <!-- Right Profile & Actions -->
+            <div class="flex items-center gap-4">
+                <div class="text-right hidden sm:block">
+                    <div class="text-xs font-bold text-white">Master Admin</div>
+                    <div class="text-[10px] font-mono text-emerald-400">admin@zinipay.com</div>
+                </div>
+                <button onclick="logout()" class="bg-slate-800 hover:bg-red-900/40 text-slate-300 hover:text-red-300 border border-slate-700 hover:border-red-700/50 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer">
+                    Sign Out
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Admin Dashboard Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-8">
+        
+        <!-- Welcome Banner -->
+        <div class="rounded-3xl bg-gradient-to-r from-sky-900/40 via-slate-900 to-indigo-900/30 border border-sky-500/30 p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-2xl">
+            <div>
+                <span class="text-xs font-mono font-bold tracking-widest text-sky-400 uppercase">Platform Control Center</span>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Platform Master Dashboard</h1>
+                <p class="text-xs sm:text-sm text-slate-400 mt-1 max-w-xl">
+                    Full platform-wide oversight. Manage all customer merchant accounts, inspect live SMS verification daemons, and monitor gateway volume.
+                </p>
+            </div>
+            <div class="flex flex-wrap gap-2.5">
+                <button onclick="switchTab('merchants')" class="btn-zini-gradient text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow cursor-pointer">
+                    Manage Merchants
+                </button>
+                <button onclick="switchTab('transactions')" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl border border-slate-700 cursor-pointer">
+                    Global Feed
+                </button>
+            </div>
+        </div>
+
+        <!-- 4 Platform-Wide Key Performance Metrics -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
+                <div class="flex items-center justify-between text-slate-400 text-xs">
+                    <span>Total Processed Volume</span>
+                    <span class="text-emerald-400 font-bold bg-emerald-950/50 px-2 py-0.5 rounded">+24.8%</span>
+                </div>
+                <div class="mt-2 text-2xl font-mono font-extrabold text-white">৳ 14,250,800</div>
+                <div class="text-[11px] text-slate-500 mt-1">Platform total revenue processed</div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
+                <div class="flex items-center justify-between text-slate-400 text-xs">
+                    <span>Registered Merchants</span>
+                    <span class="text-sky-400 font-bold bg-sky-950/50 px-2 py-0.5 rounded">524 Total</span>
+                </div>
+                <div class="mt-2 text-2xl font-mono font-extrabold text-white">518 Active</div>
+                <div class="text-[11px] text-slate-500 mt-1">6 pending KYC / setup</div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
+                <div class="flex items-center justify-between text-slate-400 text-xs">
+                    <span>Connected Android Syncs</span>
+                    <span class="text-emerald-400 font-bold flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Live
+                    </span>
+                </div>
+                <div class="mt-2 text-2xl font-mono font-extrabold text-white">312 Devices</div>
+                <div class="text-[11px] text-slate-500 mt-1">Real-time SMS daemon listeners</div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
+                <div class="flex items-center justify-between text-slate-400 text-xs">
+                    <span>Today's Transactions</span>
+                    <span class="text-sky-400 font-bold bg-sky-950/50 px-2 py-0.5 rounded">0.4s Avg</span>
+                </div>
+                <div class="mt-2 text-2xl font-mono font-extrabold text-white">2,419 Trx</div>
+                <div class="text-[11px] text-slate-500 mt-1">99.8% automated verification</div>
+            </div>
+
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-slate-800 text-xs font-bold gap-6">
+            <button onclick="switchTab('merchants')" id="tab-merchants" class="tab-btn pb-3 text-sky-400 border-b-2 border-sky-400 cursor-pointer">
+                Merchants & Customers (524)
+            </button>
+            <button onclick="switchTab('transactions')" id="tab-transactions" class="tab-btn pb-3 text-slate-400 hover:text-white cursor-pointer">
+                Global Transaction Feed
+            </button>
+            <button onclick="switchTab('gateways')" id="tab-gateways" class="tab-btn pb-3 text-slate-400 hover:text-white cursor-pointer">
+                SMS Gateways & Daemon Status
+            </button>
+            <button onclick="switchTab('settings')" id="tab-settings" class="tab-btn pb-3 text-slate-400 hover:text-white cursor-pointer">
+                Platform Settings
+            </button>
+        </div>
+
+        <!-- ==================== TAB 1: MERCHANTS & CUSTOMERS ==================== -->
+        <div id="view-merchants" class="tab-view space-y-4">
+            
+            <!-- Filter Bar -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-900 p-4 rounded-2xl border border-slate-800">
+                <div class="flex items-center gap-3 w-full sm:w-auto">
+                    <input type="text" id="merchantSearch" onkeyup="filterMerchants()" placeholder="Search store name, owner, or email..." class="bg-slate-950 border border-slate-700 text-white rounded-xl px-4 py-2 text-xs focus:outline-none focus:border-sky-500 w-full sm:w-72"/>
+                    <select id="statusFilter" onchange="filterMerchants()" class="bg-slate-950 border border-slate-700 text-slate-300 rounded-xl px-3 py-2 text-xs focus:outline-none">
+                        <option value="all">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="pending">Pending</option>
+                        <option value="suspended">Suspended</option>
+                    </select>
+                </div>
+                <div class="text-xs text-slate-400 font-mono">
+                    Showing <span id="merchantCount" class="text-white font-bold">5</span> Featured Merchants
+                </div>
+            </div>
+
+            <!-- Merchant Table -->
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-950 text-slate-400 border-b border-slate-800 uppercase tracking-wider font-mono text-[10px]">
+                            <tr>
+                                <th class="py-3.5 px-5">Merchant / Store</th>
+                                <th class="py-3.5 px-4">Contact Email</th>
+                                <th class="py-3.5 px-4">Subscription</th>
+                                <th class="py-3.5 px-4">Total Volume</th>
+                                <th class="py-3.5 px-4">Devices</th>
+                                <th class="py-3.5 px-4">Status</th>
+                                <th class="py-3.5 px-5 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="merchantTableBody" class="divide-y divide-slate-800 text-slate-300">
+                            <!-- Populated dynamically via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 2: GLOBAL TRANSACTION FEED ==================== -->
+        <div id="view-transactions" class="tab-view hidden space-y-4">
+            <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 flex justify-between items-center text-xs">
+                <div class="flex items-center gap-3">
+                    <span class="text-slate-400">Filter Gateway:</span>
+                    <button onclick="filterTrx('all')" class="trx-filter-btn px-3 py-1 bg-sky-600 text-white rounded-lg font-bold">All</button>
+                    <button onclick="filterTrx('bKash')" class="trx-filter-btn px-3 py-1 bg-slate-800 text-slate-300 hover:text-white rounded-lg">bKash</button>
+                    <button onclick="filterTrx('Nagad')" class="trx-filter-btn px-3 py-1 bg-slate-800 text-slate-300 hover:text-white rounded-lg">Nagad</button>
+                    <button onclick="filterTrx('Rocket')" class="trx-filter-btn px-3 py-1 bg-slate-800 text-slate-300 hover:text-white rounded-lg">Rocket</button>
+                </div>
+                <div class="flex items-center gap-2 font-mono text-[11px] text-emerald-400">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Live Global Stream</span>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-950 text-slate-400 border-b border-slate-800 uppercase tracking-wider font-mono text-[10px]">
+                            <tr>
+                                <th class="py-3.5 px-5">Trx ID</th>
+                                <th class="py-3.5 px-4">Merchant Store</th>
+                                <th class="py-3.5 px-4">Gateway / Type</th>
+                                <th class="py-3.5 px-4">Customer Phone</th>
+                                <th class="py-3.5 px-4">Amount</th>
+                                <th class="py-3.5 px-4">Status</th>
+                                <th class="py-3.5 px-5 text-right">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="globalTrxBody" class="divide-y divide-slate-800 font-mono text-slate-300">
+                            <!-- Rendered by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 3: SMS GATEWAYS & DAEMON ==================== -->
+        <div id="view-gateways" class="tab-view hidden space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+                            <h3 class="font-bold text-white text-sm">bKash SMS Parser</h3>
+                        </div>
+                        <span class="bg-emerald-500/20 text-emerald-400 text-[10px] font-mono px-2 py-0.5 rounded font-bold">ACTIVE</span>
+                    </div>
+                    <p class="text-xs text-slate-400">Parses regex: "You have received Tk X from Y. TrxID: Z"</p>
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex justify-between text-xs font-mono">
+                        <span class="text-slate-500">Processed Today:</span>
+                        <span class="text-white font-bold">1,892 Trx</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+                            <h3 class="font-bold text-white text-sm">Nagad SMS Parser</h3>
+                        </div>
+                        <span class="bg-emerald-500/20 text-emerald-400 text-[10px] font-mono px-2 py-0.5 rounded font-bold">ACTIVE</span>
+                    </div>
+                    <p class="text-xs text-slate-400">Parses regex: "Money received Tk X from Y. TxnID: Z"</p>
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex justify-between text-xs font-mono">
+                        <span class="text-slate-500">Processed Today:</span>
+                        <span class="text-white font-bold">418 Trx</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+                            <h3 class="font-bold text-white text-sm">Rocket SMS Parser</h3>
+                        </div>
+                        <span class="bg-emerald-500/20 text-emerald-400 text-[10px] font-mono px-2 py-0.5 rounded font-bold">ACTIVE</span>
+                    </div>
+                    <p class="text-xs text-slate-400">Parses regex: "Tk X received from Y. TxnId: Z"</p>
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex justify-between text-xs font-mono">
+                        <span class="text-slate-500">Processed Today:</span>
+                        <span class="text-white font-bold">109 Trx</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6">
+                <h3 class="text-sm font-bold text-white mb-3">Live Server Sync Log Daemon</h3>
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 font-mono text-[11px] text-emerald-400 space-y-1.5 h-48 overflow-y-auto">
+                    <div>[2026-09-10 21:28:02] DAEMON_SYNC: Device #312 (Tanvir Shop) heartbeat received. Battery: 88%, Signal: 4G.</div>
+                    <div>[2026-09-10 21:28:11] SMS_MATCH: TrxID BK902KA1X matched for Invoice #8472 (৳1,250.00). Response 200 OK.</div>
+                    <div>[2026-09-10 21:28:18] WEBHOOK_DISPATCH: Sent to https://tanvirshop.com/api/payment-callback [STATUS: SUCCESS 200]</div>
+                    <div>[2026-09-10 21:28:34] DAEMON_SYNC: Device #109 (Ayesha Boutique) heartbeat received. Battery: 94%, Signal: WiFi.</div>
+                    <div>[2026-09-10 21:28:49] SMS_MATCH: TrxID 7HM92KL4P matched for Invoice #3312 (৳3,500.00). Response 200 OK.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 4: PLATFORM SETTINGS ==================== -->
+        <div id="view-settings" class="tab-view hidden space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-3xl space-y-4">
+                <h3 class="text-base font-bold text-white">Global Platform Configuration</h3>
+                
+                <div class="space-y-4 text-xs">
+                    <div>
+                        <label class="font-bold text-slate-300 block mb-1">Platform Brand Title</label>
+                        <input type="text" value="ZiniPay Automation Infrastructure" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-white font-medium"/>
+                    </div>
+                    <div>
+                        <label class="font-bold text-slate-300 block mb-1">Default Transaction Fee (%)</label>
+                        <input type="text" value="0.00% (Zero commission default)" readonly class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-emerald-400 font-mono font-bold"/>
+                    </div>
+                    <div>
+                        <label class="font-bold text-slate-300 block mb-1">Master Webhook Secret Key</label>
+                        <input type="text" value="whsec_zinipay_platform_master_99218274198273" readonly class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sky-400 font-mono text-xs"/>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="alert('Platform settings saved successfully!')" class="btn-zini-gradient px-6 py-2.5 rounded-xl font-bold text-white cursor-pointer">
+                            Save Global Settings
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Merchant Inspection Modal -->
+    <div id="merchantModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl p-6 max-w-lg w-full text-xs space-y-4 text-white shadow-2xl">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 id="modalMerchantName" class="text-base font-bold">Merchant Details</h3>
+                <button onclick="closeMerchantModal()" class="text-slate-400 hover:text-white cursor-pointer text-lg font-bold">&times;</button>
+            </div>
+            <div id="modalMerchantDetails" class="space-y-2"></div>
+            <div class="pt-3 border-t border-slate-800 flex justify-end gap-2">
+                <button onclick="closeMerchantModal()" class="px-4 py-2 bg-slate-800 rounded-xl text-slate-300 font-semibold cursor-pointer">Close</button>
+                <button onclick="toggleMerchantStatus()" id="modalToggleBtn" class="px-4 py-2 bg-amber-600 rounded-xl text-white font-bold cursor-pointer">Suspend Account</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Sample Merchants Database
+        let merchants = [
+            {
+                id: "m_1",
+                key: "tanvir",
+                store: "Tanvir Tech & Gadgets",
+                owner: "Tanvir Ahmed",
+                email: "tanvir@shop.com",
+                plan: "Yearly Plan (৳600/yr)",
+                volume: 48250,
+                devices: 1,
+                status: "Active",
+                date: "2026-08-12"
+            },
+            {
+                id: "m_2",
+                key: "ayesha",
+                store: "Ayesha Fashion & Boutique",
+                owner: "Ayesha Siddiqua",
+                email: "ayesha@boutique.com",
+                plan: "Monthly Plan (৳100/mo)",
+                volume: 21400,
+                devices: 1,
+                status: "Active",
+                date: "2026-08-20"
+            },
+            {
+                id: "m_3",
+                key: "nexus",
+                store: "Nexus Digital Services BD",
+                owner: "Mahmud Hasan",
+                email: "mahmud@nexusbd.com",
+                plan: "Lifetime Enterprise",
+                volume: 189200,
+                devices: 3,
+                status: "Active",
+                date: "2026-07-04"
+            },
+            {
+                id: "m_4",
+                key: "smm",
+                store: "SMM Bangladesh Booster",
+                owner: "Kazi Fahim",
+                email: "fahim@smmbangladesh.com",
+                plan: "Yearly Plan (৳600/yr)",
+                volume: 87500,
+                devices: 2,
+                status: "Active",
+                date: "2026-08-01"
+            },
+            {
+                id: "m_5",
+                key: "fresh",
+                store: "Sylhet Organic Farm",
+                owner: "Rashed Karim",
+                email: "rashed@sylhetfarm.com",
+                plan: "Free Trial",
+                volume: 4200,
+                devices: 0,
+                status: "Pending Setup",
+                date: "2026-09-08"
+            }
+        ];
+
+        // Global Transaction Feed
+        const globalTransactions = [
+            { id: "BK902KA1X", store: "Tanvir Tech & Gadgets", gateway: "bKash", phone: "01712***901", amount: "৳ 1,250.00", status: "Verified", time: "2 mins ago" },
+            { id: "7HM92KL4P", store: "Ayesha Fashion & Boutique", gateway: "Nagad", phone: "01923***412", amount: "৳ 3,500.00", status: "Verified", time: "6 mins ago" },
+            { id: "NX89201LK", store: "Nexus Digital Services BD", gateway: "Rocket", phone: "01834***890", amount: "৳ 7,200.00", status: "Verified", time: "14 mins ago" },
+            { id: "BK482910M", store: "Tanvir Tech & Gadgets", gateway: "bKash", phone: "01678***112", amount: "৳ 850.00", status: "Verified", time: "22 mins ago" },
+            { id: "NG338192X", store: "SMM Bangladesh Booster", gateway: "Nagad", phone: "01511***334", amount: "৳ 2,000.00", status: "Verified", time: "31 mins ago" },
+            { id: "BK110293P", store: "Ayesha Fashion & Boutique", gateway: "bKash", phone: "01755***667", amount: "৳ 1,800.00", status: "Verified", time: "45 mins ago" },
+        ];
+
+        let currentActiveMerchantId = null;
+
+        // Render Table
+        function renderMerchants(list) {
+            const tbody = document.getElementById('merchantTableBody');
+            tbody.innerHTML = '';
+
+            list.forEach(m => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-800/50 transition";
+                tr.innerHTML = `
+                    <td class="py-4 px-5">
+                        <div class="font-bold text-white text-sm">${m.store}</div>
+                        <div class="text-[11px] text-slate-400">Owner: ${m.owner}</div>
+                    </td>
+                    <td class="py-4 px-4 font-mono text-slate-300">${m.email}</td>
+                    <td class="py-4 px-4">
+                        <span class="bg-slate-800 px-2.5 py-1 rounded-lg text-[11px] font-semibold text-sky-400 border border-slate-700">${m.plan}</span>
+                    </td>
+                    <td class="py-4 px-4 font-mono font-bold text-emerald-400">৳ ${m.volume.toLocaleString()}</td>
+                    <td class="py-4 px-4 font-mono">${m.devices} Device${m.devices !== 1 ? 's' : ''}</td>
+                    <td class="py-4 px-4">
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${m.status === 'Active' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'}">
+                            ${m.status}
+                        </span>
+                    </td>
+                    <td class="py-4 px-5 text-right space-x-1.5 whitespace-nowrap">
+                        <button onclick="inspectMerchant('${m.id}')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-2.5 py-1.5 rounded-lg text-[11px] font-bold transition cursor-pointer">View</button>
+                        <button onclick="loginAsCustomer('${m.key}')" class="btn-zini-gradient text-white px-2.5 py-1.5 rounded-lg text-[11px] font-bold shadow transition cursor-pointer">Login As</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+            document.getElementById('merchantCount').textContent = list.length;
+        }
+
+        // Render Global Transactions
+        function renderGlobalTrx(list) {
+            const tbody = document.getElementById('globalTrxBody');
+            tbody.innerHTML = '';
+
+            list.forEach(t => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-800/50 transition";
+                tr.innerHTML = `
+                    <td class="py-3.5 px-5 font-bold text-sky-400">${t.id}</td>
+                    <td class="py-3.5 px-4 font-sans font-medium text-white">${t.store}</td>
+                    <td class="py-3.5 px-4">
+                        <span class="px-2 py-0.5 rounded text-[11px] font-bold ${t.gateway === 'bKash' ? 'bg-pink-500/20 text-pink-400' : t.gateway === 'Nagad' ? 'bg-orange-500/20 text-orange-400' : 'bg-purple-500/20 text-purple-400'}">
+                            ${t.gateway}
+                        </span>
+                    </td>
+                    <td class="py-3.5 px-4 text-slate-300">${t.phone}</td>
+                    <td class="py-3.5 px-4 font-bold text-emerald-400">${t.amount}</td>
+                    <td class="py-3.5 px-4">
+                        <span class="text-emerald-400 font-bold bg-emerald-950/60 px-2 py-0.5 rounded text-[10px]">
+                            &check; ${t.status}
+                        </span>
+                    </td>
+                    <td class="py-3.5 px-5 text-right text-slate-500 text-[11px]">${t.time}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-view').forEach(v => v.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('text-sky-400', 'border-b-2', 'border-sky-400');
+                b.classList.add('text-slate-400');
+            });
+
+            const targetView = document.getElementById('view-' + tabId);
+            const targetBtn = document.getElementById('tab-' + tabId);
+            if (targetView) targetView.classList.remove('hidden');
+            if (targetBtn) {
+                targetBtn.classList.remove('text-slate-400');
+                targetBtn.classList.add('text-sky-400', 'border-b-2', 'border-sky-400');
+            }
+        }
+
+        // Filtering
+        function filterMerchants() {
+            const query = document.getElementById('merchantSearch').value.toLowerCase();
+            const status = document.getElementById('statusFilter').value;
+
+            const filtered = merchants.filter(m => {
+                const matchQuery = m.store.toLowerCase().includes(query) || m.owner.toLowerCase().includes(query) || m.email.toLowerCase().includes(query);
+                const matchStatus = (status === 'all') || (status === 'active' && m.status === 'Active') || (status === 'pending' && m.status.includes('Pending')) || (status === 'suspended' && m.status === 'Suspended');
+                return matchQuery && matchStatus;
+            });
+            renderMerchants(filtered);
+        }
+
+        function filterTrx(gateway) {
+            document.querySelectorAll('.trx-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-sky-600', 'text-white');
+                btn.classList.add('bg-slate-800', 'text-slate-300');
+            });
+            event.target.classList.remove('bg-slate-800', 'text-slate-300');
+            event.target.classList.add('bg-sky-600', 'text-white');
+
+            if (gateway === 'all') {
+                renderGlobalTrx(globalTransactions);
+            } else {
+                renderGlobalTrx(globalTransactions.filter(t => t.gateway === gateway));
+            }
+        }
+
+        // Inspect Merchant
+        function inspectMerchant(id) {
+            const m = merchants.find(item => item.id === id);
+            if (!m) return;
+            currentActiveMerchantId = id;
+            document.getElementById('modalMerchantName').textContent = m.store;
+            document.getElementById('modalMerchantDetails').innerHTML = `
+                <div class="p-3 bg-slate-950 rounded-xl space-y-1.5 border border-slate-800">
+                    <div><span class="text-slate-400">Owner:</span> <strong class="text-white">${m.owner}</strong></div>
+                    <div><span class="text-slate-400">Email:</span> <strong class="text-sky-400">${m.email}</strong></div>
+                    <div><span class="text-slate-400">Plan:</span> <strong class="text-amber-400">${m.plan}</strong></div>
+                    <div><span class="text-slate-400">Total Sales:</span> <strong class="text-emerald-400">৳ ${m.volume.toLocaleString()}</strong></div>
+                    <div><span class="text-slate-400">Connected Android Phones:</span> <strong class="text-white">${m.devices}</strong></div>
+                    <div><span class="text-slate-400">Current Status:</span> <strong class="text-white">${m.status}</strong></div>
+                </div>
+            `;
+            document.getElementById('modalToggleBtn').textContent = m.status === 'Active' ? 'Suspend Merchant' : 'Activate Merchant';
+            document.getElementById('merchantModal').classList.remove('hidden');
+            document.getElementById('merchantModal').classList.add('flex');
+        }
+
+        function toggleMerchantStatus() {
+            const m = merchants.find(item => item.id === currentActiveMerchantId);
+            if (m) {
+                m.status = m.status === 'Active' ? 'Suspended' : 'Active';
+                renderMerchants(merchants);
+                closeMerchantModal();
+            }
+        }
+
+        function closeMerchantModal() {
+            document.getElementById('merchantModal').classList.add('hidden');
+            document.getElementById('merchantModal').classList.remove('flex');
+        }
+
+        // Role Switchers
+        function switchToCustomer(key) {
+            sessionStorage.setItem('zinipay_user_role', 'customer');
+            sessionStorage.setItem('zinipay_customer_key', key);
+            window.location.href = 'customer-panel.html';
+        }
+
+        function loginAsCustomer(key) {
+            switchToCustomer(key);
+        }
+
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        }
+
+        // Initial Load
+        renderMerchants(merchants);
+        renderGlobalTrx(globalTransactions);
+    </script>
+</body>
+</html>

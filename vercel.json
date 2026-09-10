@@ -4,6 +4,11 @@
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
     { "source": "/login", "destination": "/login.html" },
-    { "source": "/register", "destination": "/register.html" }
+    { "source": "/register", "destination": "/register.html" },
+    { "source": "/admin", "destination": "/admin-panel.html" },
+    { "source": "/admin-panel", "destination": "/admin-panel.html" },
+    { "source": "/customer", "destination": "/customer-panel.html" },
+    { "source": "/customer-panel", "destination": "/customer-panel.html" },
+    { "source": "/dashboard", "destination": "/customer-panel.html" }
   ]
 }

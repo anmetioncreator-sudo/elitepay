@@ -45,7 +45,7 @@
     </style>
 </head>
 <body class="bg-gradient-to-b from-white via-sky-50/40 to-[#f5f9ff] min-h-screen flex items-center justify-center p-4 text-slate-800 font-sans">
-    <div class="w-full max-w-md">
+    <div class="w-full max-w-md my-6">
         
         <!-- Logo -->
         <div class="text-center mb-6">
@@ -57,24 +57,63 @@
                 </span>
                 <span class="text-2xl font-extrabold tracking-tight text-sky-600">ZiniPay</span>
             </a>
-            <p class="text-xs text-slate-500 mt-1">Smart Payment Automation Dashboard</p>
+            <p class="text-xs text-slate-500 mt-1">Smart Payment Automation Portal</p>
         </div>
 
-        <!-- Login Card -->
-        <div class="bg-white rounded-3xl border border-slate-200/80 p-8 shadow-xl shadow-sky-950/5">
-            <h2 class="text-2xl font-bold text-slate-900 text-center mb-2">Merchant Sign In</h2>
-            <p class="text-xs text-slate-500 text-center mb-6">Access your transactions, devices, and automated SMS sync</p>
-
-            <!-- Info banner -->
-            <div class="rounded-2xl border border-sky-200 bg-sky-50/80 p-3.5 mb-6 text-xs text-sky-800 flex items-start gap-2.5">
-                <svg class="w-5 h-5 text-sky-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <span>Live demo preview. Enter any demo credentials to simulate merchant access.</span>
+        <!-- 1-Click Fast Role Switcher Box -->
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 mb-5 text-white shadow-xl">
+            <div class="text-xs font-bold text-slate-300 mb-2 flex items-center justify-between">
+                <span>⚡ 1-Click Test Login Accounts:</span>
+                <span class="text-[10px] text-emerald-400 font-mono">Isolated Panels</span>
             </div>
+            <div class="space-y-2 text-xs">
+                <!-- 1. Admin Owner -->
+                <button type="button" onclick="quickLogin('admin')" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 font-bold transition cursor-pointer text-left">
+                    <div class="flex items-center gap-2">
+                        <span class="text-base">👑</span>
+                        <div>
+                            <div>Platform Owner (Admin)</div>
+                            <div class="text-[10px] text-amber-400/70 font-mono">admin@zinipay.com</div>
+                        </div>
+                    </div>
+                    <span class="text-[11px] bg-amber-500 text-slate-950 px-2 py-0.5 rounded font-extrabold">&rarr; Admin Panel</span>
+                </button>
+
+                <!-- 2. Customer 1 (Tanvir Shop) -->
+                <button type="button" onclick="quickLogin('tanvir')" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 border border-sky-500/30 text-sky-300 font-bold transition cursor-pointer text-left">
+                    <div class="flex items-center gap-2">
+                        <span class="text-base">👤</span>
+                        <div>
+                            <div>Customer 1 (Tanvir Shop)</div>
+                            <div class="text-[10px] text-sky-400/70 font-mono">tanvir@shop.com</div>
+                        </div>
+                    </div>
+                    <span class="text-[11px] bg-sky-500 text-white px-2 py-0.5 rounded font-extrabold">&rarr; Shop Panel</span>
+                </button>
+
+                <!-- 3. Customer 2 (Ayesha Boutique) -->
+                <button type="button" onclick="quickLogin('ayesha')" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-300 font-bold transition cursor-pointer text-left">
+                    <div class="flex items-center gap-2">
+                        <span class="text-base">👗</span>
+                        <div>
+                            <div>Customer 2 (Ayesha Boutique)</div>
+                            <div class="text-[10px] text-purple-400/70 font-mono">ayesha@boutique.com</div>
+                        </div>
+                    </div>
+                    <span class="text-[11px] bg-purple-500 text-white px-2 py-0.5 rounded font-extrabold">&rarr; Boutique Panel</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Standard Login Card -->
+        <div class="bg-white rounded-3xl border border-slate-200/80 p-8 shadow-xl shadow-sky-950/5">
+            <h2 class="text-2xl font-bold text-slate-900 text-center mb-2">Sign In to Your Account</h2>
+            <p class="text-xs text-slate-500 text-center mb-6">Enter your email and password to open your panel</p>
 
             <form action="#" method="POST" id="loginForm" class="space-y-4 text-xs">
                 <div>
-                    <label class="font-bold text-slate-700 block mb-1.5">Email or Username</label>
-                    <input type="text" name="username" value="demo@zinipay.com" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
+                    <label class="font-bold text-slate-700 block mb-1.5">Email Address</label>
+                    <input type="text" id="inputUsername" name="username" value="admin@zinipay.com" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
                 </div>
 
                 <div>
@@ -82,7 +121,7 @@
                         <label class="font-bold text-slate-700">Password</label>
                         <a href="#" class="text-sky-600 hover:underline">Forgot password?</a>
                     </div>
-                    <input type="password" name="password" value="12345678" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
+                    <input type="password" id="inputPassword" name="password" value="12345678" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 font-medium focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition"/>
                 </div>
 
                 <div class="flex items-center gap-2 pt-1">
@@ -91,7 +130,7 @@
                 </div>
 
                 <div class="pt-3">
-                    <button type="submit" class="w-full btn-zini-gradient rounded-xl py-3.5 text-sm font-bold text-white shadow-md">
+                    <button type="submit" class="w-full btn-zini-gradient rounded-xl py-3.5 text-sm font-bold text-white shadow-md cursor-pointer">
                         Sign In &rarr;
                     </button>
                 </div>
@@ -105,9 +144,34 @@
     </div>
 
     <script>
+        // 1-Click Quick Login
+        function quickLogin(type) {
+            if (type === 'admin') {
+                sessionStorage.setItem('zinipay_user_role', 'admin');
+                window.location.href = 'admin-panel.html';
+            } else if (type === 'tanvir') {
+                sessionStorage.setItem('zinipay_user_role', 'customer');
+                sessionStorage.setItem('zinipay_customer_key', 'tanvir');
+                window.location.href = 'customer-panel.html';
+            } else if (type === 'ayesha') {
+                sessionStorage.setItem('zinipay_user_role', 'customer');
+                sessionStorage.setItem('zinipay_customer_key', 'ayesha');
+                window.location.href = 'customer-panel.html';
+            }
+        }
+
+        // Form Submit Handler
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert("ZiniPay Demo Mode:\n\nAuthentication simulated successfully!\nIn your self-hosted cPanel installation, this signs in to the full PHP/MySQL backend at /pp-content/pp-admin/.");
+            const email = document.getElementById('inputUsername').value.trim().toLowerCase();
+
+            if (email.includes('admin') || email.includes('owner')) {
+                quickLogin('admin');
+            } else if (email.includes('ayesha')) {
+                quickLogin('ayesha');
+            } else {
+                quickLogin('tanvir');
+            }
         });
     </script>
 </body>

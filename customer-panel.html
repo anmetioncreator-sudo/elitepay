@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Merchant Portal - ZiniPay Payment Automation</title>
+    <link rel="shortcut icon" href="assets/images/elitepay-favicon.svg" type="image/svg+xml"/>
+    
+    <!-- Google Fonts: Poppins & Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sky: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        },
+                        slate: {
+                            950: '#071426',
+                            900: '#0b1324',
+                            850: '#0f1a32',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        mono: ['"Fira Code"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .btn-zini-gradient {
+            background: linear-gradient(90deg, #007aff 0%, #5bc0ff 50%, #007aff 100%);
+            background-size: 200% auto;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.25);
+        }
+        .btn-zini-gradient:hover {
+            background-position: right center;
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.35);
+        }
+    </style>
+</head>
+<body class="bg-[#0b1324] text-slate-100 font-sans min-h-screen flex flex-col antialiased">
+
+    <!-- Top Merchant Header -->
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            
+            <!-- Store Brand -->
+            <div class="flex items-center gap-3">
+                <a href="./" class="flex items-center gap-2.5">
+                    <span class="flex h-9 w-9 items-center justify-center rounded-full bg-sky-600 text-white font-bold shadow-md">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                    </span>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-extrabold text-lg tracking-tight text-white" id="headerStoreName">My Merchant Store</span>
+                            <span class="bg-sky-500/20 text-sky-400 border border-sky-500/30 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">MERCHANT PORTAL</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Quick Account Switcher (Demonstrating Multi-User Isolation) -->
+            <div class="hidden md:flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-2xl border border-slate-800 text-xs">
+                <span class="text-slate-400 font-medium">Active Account:</span>
+                <button onclick="switchCustomer('tanvir')" id="switchBtnTanvir" class="px-2.5 py-1 rounded-xl font-bold transition cursor-pointer text-slate-400 hover:text-white">Customer 1 (Tanvir)</button>
+                <button onclick="switchCustomer('ayesha')" id="switchBtnAyesha" class="px-2.5 py-1 rounded-xl font-bold transition cursor-pointer text-slate-400 hover:text-white">Customer 2 (Ayesha)</button>
+                <a href="admin-panel.html" class="text-amber-400 hover:text-amber-300 font-bold px-2.5 py-1 rounded-xl border border-amber-500/30 hover:bg-amber-950/40 transition">👑 Admin View</a>
+            </div>
+
+            <!-- Right Profile Info -->
+            <div class="flex items-center gap-4">
+                <div class="text-right hidden sm:block">
+                    <div class="text-xs font-bold text-white" id="headerOwnerName">Tanvir Ahmed</div>
+                    <div class="text-[10px] font-mono text-sky-400" id="headerOwnerEmail">tanvir@shop.com</div>
+                </div>
+                <button onclick="logout()" class="bg-slate-800 hover:bg-red-900/40 text-slate-300 hover:text-red-300 border border-slate-700 hover:border-red-700/50 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer">
+                    Sign Out
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Merchant Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-8">
+        
+        <!-- Store Banner & Fast Action -->
+        <div class="rounded-3xl bg-gradient-to-r from-sky-900/40 via-slate-900 to-indigo-900/30 border border-sky-500/30 p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-2xl">
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-mono font-bold tracking-widest text-emerald-400 uppercase flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        Automated SMS Sync: ONLINE
+                    </span>
+                    <span class="text-slate-600">&bull;</span>
+                    <span id="planBadge" class="text-xs font-bold text-sky-400 bg-sky-950/80 px-2 py-0.5 rounded-lg border border-sky-800">Yearly Plan</span>
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-2" id="storeHeroTitle">Tanvir Tech & Gadgets</h1>
+                <p class="text-xs sm:text-sm text-slate-400 mt-1" id="storeHeroSubtitle">
+                    Accepting payments to your personal numbers directly with 0% fees and instant database confirmation.
+                </p>
+            </div>
+            <div class="flex flex-wrap gap-2.5">
+                <button onclick="openNewPaymentLinkModal()" class="btn-zini-gradient text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow cursor-pointer">
+                    + Create Payment Link
+                </button>
+                <button onclick="simulateIncomingPayment()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow cursor-pointer flex items-center gap-1.5">
+                    <span>⚡ Test Receive ৳500</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 4 Customer Store Metrics -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
+                <div class="flex items-center justify-between text-slate-400 text-xs">
+                    <span>Today's Received Sales</span>
+                    <span class="text-emerald-400 font-bold bg-emerald-950/50 px-2 py-0.5 rounded">0% Fee</span>
+                </div>
+                <div class="mt-2 text-2xl font-mono font-extrabold text-emerald-400" id="statTodaySales">৳ 48,250</div>
+                <div class="text-[11px] text-slate-500 mt-1">Direct to your bKash / Nagad</div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
+                <div class="flex items-center justify-between text-slate-400 text-xs">
+                    <span>Total Orders Verified</span>
+                    <span class="text-sky-400 font-bold bg-sky-950/50 px-2 py-0.5 rounded" id="statOrderCount">142 Orders</span>
+                </div>
+                <div class="mt-2 text-2xl font-mono font-extrabold text-white" id="statTotalSales">৳ 182,400</div>
+                <div class="text-[11px] text-slate-500 mt-1">Lifetime processed amount</div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
+                <div class="flex items-center justify-between text-slate-400 text-xs">
+                    <span>Active Android Phone</span>
+                    <span class="text-emerald-400 font-bold">Connected</span>
+                </div>
+                <div class="mt-2 text-2xl font-mono font-extrabold text-white" id="statDeviceName">Samsung Galaxy A54</div>
+                <div class="text-[11px] text-slate-500 mt-1">Battery 88% &bull; Signal 4G</div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
+                <div class="flex items-center justify-between text-slate-400 text-xs">
+                    <span>Average Verification Time</span>
+                    <span class="text-emerald-400 font-bold">Fast</span>
+                </div>
+                <div class="mt-2 text-2xl font-mono font-extrabold text-white">0.4 Seconds</div>
+                <div class="text-[11px] text-slate-500 mt-1">Instant callback to your store</div>
+            </div>
+
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-slate-800 text-xs font-bold gap-6">
+            <button onclick="switchTab('transactions')" id="tab-transactions" class="tab-btn pb-3 text-sky-400 border-b-2 border-sky-400 cursor-pointer">
+                My Transactions
+            </button>
+            <button onclick="switchTab('numbers')" id="tab-numbers" class="tab-btn pb-3 text-slate-400 hover:text-white cursor-pointer">
+                My Payment Numbers (bKash/Nagad)
+            </button>
+            <button onclick="switchTab('links')" id="tab-links" class="tab-btn pb-3 text-slate-400 hover:text-white cursor-pointer">
+                Custom Payment Links
+            </button>
+            <button onclick="switchTab('devices')" id="tab-devices" class="tab-btn pb-3 text-slate-400 hover:text-white cursor-pointer">
+                Connected Android Sync App
+            </button>
+            <button onclick="switchTab('api')" id="tab-api" class="tab-btn pb-3 text-slate-400 hover:text-white cursor-pointer">
+                API Keys & Webhooks
+            </button>
+        </div>
+
+        <!-- ==================== TAB 1: MY TRANSACTIONS ==================== -->
+        <div id="view-transactions" class="tab-view space-y-4">
+            <div class="flex justify-between items-center bg-slate-900 p-4 rounded-2xl border border-slate-800 text-xs">
+                <div class="flex items-center gap-3">
+                    <span class="text-slate-400">Filter:</span>
+                    <button onclick="filterCustomerTrx('all')" class="cust-filter-btn px-3 py-1 bg-sky-600 text-white rounded-lg font-bold">All</button>
+                    <button onclick="filterCustomerTrx('bKash')" class="cust-filter-btn px-3 py-1 bg-slate-800 text-slate-300 hover:text-white rounded-lg">bKash</button>
+                    <button onclick="filterCustomerTrx('Nagad')" class="cust-filter-btn px-3 py-1 bg-slate-800 text-slate-300 hover:text-white rounded-lg">Nagad</button>
+                    <button onclick="filterCustomerTrx('Rocket')" class="cust-filter-btn px-3 py-1 bg-slate-800 text-slate-300 hover:text-white rounded-lg">Rocket</button>
+                </div>
+                <div class="text-slate-400 font-mono text-[11px]">
+                    Showing <span id="customerTrxCount" class="text-white font-bold">0</span> verified payments
+                </div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-950 text-slate-400 border-b border-slate-800 uppercase tracking-wider font-mono text-[10px]">
+                            <tr>
+                                <th class="py-3.5 px-5">Trx ID</th>
+                                <th class="py-3.5 px-4">Order / Invoice</th>
+                                <th class="py-3.5 px-4">Channel</th>
+                                <th class="py-3.5 px-4">Customer Mobile</th>
+                                <th class="py-3.5 px-4">Amount</th>
+                                <th class="py-3.5 px-4">Status</th>
+                                <th class="py-3.5 px-5 text-right">Date & Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerTrxBody" class="divide-y divide-slate-800 font-mono text-slate-300">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 2: MY PAYMENT NUMBERS ==================== -->
+        <div id="view-numbers" class="tab-view hidden space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- bKash Configuration -->
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center font-bold text-xs">bK</span>
+                            <div>
+                                <h3 class="font-bold text-white text-sm">bKash Configuration</h3>
+                                <p class="text-[11px] text-slate-400">Accept Send Money payments to personal number</p>
+                            </div>
+                        </div>
+                        <span class="bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded">Enabled</span>
+                    </div>
+
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <label class="font-bold text-slate-300 block mb-1">Your Personal bKash Number</label>
+                            <input type="text" id="custBkashNumber" value="01712-345678" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-white font-mono font-bold"/>
+                        </div>
+                        <div>
+                            <label class="font-bold text-slate-300 block mb-1">Account Type</label>
+                            <select class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-white">
+                                <option>Personal Account (Send Money)</option>
+                                <option>Merchant Account (Payment)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="font-bold text-slate-300 block mb-1">Payment Instructions shown to buyer</label>
+                            <textarea class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-slate-300 font-mono text-[11px] h-20">Go to your bKash app -> Send Money to this number -> enter exact amount -> copy the TrxID and paste on the checkout page.</textarea>
+                        </div>
+                        <button onclick="saveNumberSettings()" class="btn-zini-gradient text-white font-bold px-5 py-2.5 rounded-xl cursor-pointer">
+                            Save bKash Settings
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Nagad Configuration -->
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold text-xs">NG</span>
+                            <div>
+                                <h3 class="font-bold text-white text-sm">Nagad Configuration</h3>
+                                <p class="text-[11px] text-slate-400">Accept Send Money payments to personal number</p>
+                            </div>
+                        </div>
+                        <span class="bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded">Enabled</span>
+                    </div>
+
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <label class="font-bold text-slate-300 block mb-1">Your Personal Nagad Number</label>
+                            <input type="text" id="custNagadNumber" value="01923-456789" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-white font-mono font-bold"/>
+                        </div>
+                        <div>
+                            <label class="font-bold text-slate-300 block mb-1">Account Type</label>
+                            <select class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-white">
+                                <option>Personal Account (Send Money)</option>
+                                <option>Merchant Account (Payment)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="font-bold text-slate-300 block mb-1">Payment Instructions shown to buyer</label>
+                            <textarea class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-slate-300 font-mono text-[11px] h-20">Go to your Nagad app -> Send Money to this number -> enter exact amount -> copy the TrxID and paste on the checkout page.</textarea>
+                        </div>
+                        <button onclick="saveNumberSettings()" class="btn-zini-gradient text-white font-bold px-5 py-2.5 rounded-xl cursor-pointer">
+                            Save Nagad Settings
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================== TAB 3: CUSTOM PAYMENT LINKS ==================== -->
+        <div id="view-links" class="tab-view hidden space-y-6">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold text-white text-base">Your Custom Payment Links</h3>
+                    <p class="text-xs text-slate-400">Sell digital products, courses, or services without needing your own hosting</p>
+                </div>
+                <button onclick="openNewPaymentLinkModal()" class="btn-zini-gradient text-white text-xs font-bold px-4 py-2 rounded-xl shadow cursor-pointer">
+                    + New Payment Link
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="customerLinksGrid">
+                <!-- Rendered dynamically -->
+            </div>
+        </div>
+
+        <!-- ==================== TAB 4: CONNECTED ANDROID SYNC APP ==================== -->
+        <div id="view-devices" class="tab-view hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                        <div>
+                            <h3 class="font-bold text-white text-base">Connected Companion Device</h3>
+                            <p class="text-xs text-slate-400">Receives bKash/Nagad SMS and auto-approves orders</p>
+                        </div>
+                        <span class="flex items-center gap-1.5 text-xs text-emerald-400 font-bold bg-emerald-950/60 px-2.5 py-1 rounded-full">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            ONLINE
+                        </span>
+                    </div>
+
+                    <div class="space-y-2.5 text-xs font-mono">
+                        <div class="flex justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+                            <span class="text-slate-400">Device Model:</span>
+                            <span class="text-white font-bold" id="deviceModelText">Samsung Galaxy A54 5G</span>
+                        </div>
+                        <div class="flex justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+                            <span class="text-slate-400">App Version:</span>
+                            <span class="text-sky-400 font-bold">ElitePay / ZiniPay Companion v3.1</span>
+                        </div>
+                        <div class="flex justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+                            <span class="text-slate-400">Battery Level:</span>
+                            <span class="text-emerald-400 font-bold">88% (Charging)</span>
+                        </div>
+                        <div class="flex justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+                            <span class="text-slate-400">Last Heartbeat:</span>
+                            <span class="text-white">Just now (12s ago)</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button onclick="alert('Device ping successful! Response time: 82ms.')" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl border border-slate-700 cursor-pointer">
+                            Ping Device &check;
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Connect New Phone Instructions -->
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4">
+                    <h3 class="font-bold text-white text-base">Connect or Switch Phone</h3>
+                    <p class="text-xs text-slate-400">
+                        Download the ZiniPay Android Companion APK, install it on the phone with your bKash/Nagad SIM, and enter your merchant sync token below:
+                    </p>
+
+                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
+                        <span class="text-[11px] font-bold text-slate-400 uppercase">Your Unique Device Sync Token:</span>
+                        <div class="flex gap-2">
+                            <input type="text" id="custDeviceToken" readonly value="zp_token_9918237912381" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 font-mono text-xs text-sky-400 font-bold"/>
+                            <button onclick="copyToken()" class="btn-zini-gradient px-3 py-2 rounded-lg text-xs font-bold text-white whitespace-nowrap cursor-pointer">Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="text-xs text-slate-400 pt-2">
+                        📥 Download App: <a href="assets/apps/elitepay-companion.apk" class="text-sky-400 font-bold underline">Download Companion APK (v3.1)</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================== TAB 5: API KEYS & WEBHOOKS ==================== -->
+        <div id="view-api" class="tab-view hidden space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-3xl space-y-5">
+                <div>
+                    <h3 class="font-bold text-white text-base">Developer API Credentials</h3>
+                    <p class="text-xs text-slate-400">Integrate automated payments into your custom website, WooCommerce, Laravel, or WHMCS</p>
+                </div>
+
+                <div class="space-y-4 text-xs">
+                    <div>
+                        <label class="font-bold text-slate-300 block mb-1">Your Merchant ID</label>
+                        <input type="text" id="custMerchantId" readonly value="MERCHANT_TANVIR_8841" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-white font-mono font-bold"/>
+                    </div>
+
+                    <div>
+                        <label class="font-bold text-slate-300 block mb-1">Live API Key</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="custApiKey" readonly value="zp_live_tanvir_981247921a99812" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sky-400 font-mono font-bold"/>
+                            <button onclick="copyApiKey()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-4 py-2 rounded-xl border border-slate-700 cursor-pointer">Copy</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="font-bold text-slate-300 block mb-1">Webhook Callback URL</label>
+                        <input type="url" id="custWebhookUrl" value="https://tanvirshop.com/api/payment-callback" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 font-mono"/>
+                        <p class="text-[11px] text-slate-500 mt-1">ZiniPay will POST payment confirmation JSON payloads to this endpoint in real time.</p>
+                    </div>
+
+                    <div class="pt-2 flex gap-3">
+                        <button onclick="saveWebhookSettings()" class="btn-zini-gradient text-white font-bold px-6 py-2.5 rounded-xl cursor-pointer">
+                            Save Webhook URL
+                        </button>
+                        <button onclick="testWebhook()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold px-4 py-2.5 rounded-xl border border-slate-700 cursor-pointer">
+                            Send Test Ping
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Create Payment Link Modal -->
+    <div id="newLinkModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl p-6 max-w-md w-full text-xs space-y-4 text-white shadow-2xl">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-base font-bold">Create New Payment Link</h3>
+                <button onclick="closeNewPaymentLinkModal()" class="text-slate-400 hover:text-white cursor-pointer text-lg font-bold">&times;</button>
+            </div>
+            <div class="space-y-3">
+                <div>
+                    <label class="font-bold text-slate-300 block mb-1">Product or Service Name</label>
+                    <input type="text" id="newLinkTitle" placeholder="e.g. Premium Membership Access" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white"/>
+                </div>
+                <div>
+                    <label class="font-bold text-slate-300 block mb-1">Price (BDT)</label>
+                    <input type="number" id="newLinkAmount" placeholder="e.g. 1500" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono font-bold"/>
+                </div>
+                <div>
+                    <label class="font-bold text-slate-300 block mb-1">Redirect URL after Success (Optional)</label>
+                    <input type="url" id="newLinkRedirect" placeholder="https://drive.google.com/... or https://yoursite.com/thankyou" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white"/>
+                </div>
+            </div>
+            <div class="pt-3 border-t border-slate-800 flex justify-end gap-2">
+                <button onclick="closeNewPaymentLinkModal()" class="px-4 py-2 bg-slate-800 rounded-xl text-slate-300 font-semibold cursor-pointer">Cancel</button>
+                <button onclick="createNewPaymentLink()" class="btn-zini-gradient px-5 py-2 rounded-xl text-white font-bold cursor-pointer">Create Link</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT & ISOLATED MULTI-CUSTOMER DATA -->
+    <script>
+        // 2 DISTINCT CUSTOMERS DATASETS
+        const customerDatabase = {
+            tanvir: {
+                key: "tanvir",
+                storeName: "Tanvir Tech & Gadgets",
+                ownerName: "Tanvir Ahmed",
+                ownerEmail: "tanvir@shop.com",
+                plan: "Yearly Plan (৳600/yr)",
+                todaySales: "৳ 48,250",
+                totalSales: "৳ 182,400",
+                orderCount: "142 Orders",
+                deviceName: "Samsung Galaxy A54 5G",
+                deviceToken: "zp_token_tanvir_49821731",
+                merchantId: "MERCHANT_TANVIR_8841",
+                apiKey: "zp_live_tanvir_981247921a99812",
+                webhookUrl: "https://tanvirshop.com/api/payment-callback",
+                bkash: "01712-345678",
+                nagad: "01923-456789",
+                transactions: [
+                    { id: "BK902KA1X", invoice: "INV-8472", gateway: "bKash", phone: "01712***901", amount: "৳ 1,250.00", status: "Verified", time: "2 mins ago" },
+                    { id: "BK482910M", invoice: "INV-8471", gateway: "bKash", phone: "01678***112", amount: "৳ 850.00", status: "Verified", time: "22 mins ago" },
+                    { id: "NG901238L", invoice: "INV-8470", gateway: "Nagad", phone: "01822***490", amount: "৳ 2,400.00", status: "Verified", time: "1 hour ago" },
+                    { id: "RC192038K", invoice: "INV-8469", gateway: "Rocket", phone: "01911***332", amount: "৳ 3,200.00", status: "Verified", time: "3 hours ago" },
+                    { id: "BK774819Q", invoice: "INV-8468", gateway: "bKash", phone: "01744***881", amount: "৳ 1,500.00", status: "Verified", time: "5 hours ago" }
+                ],
+                links: [
+                    { title: "Mechanical Keyboard Pro", amount: 3500, url: "https://piprapayxjojo.vercel.app/pay/keyboard" },
+                    { title: "Wireless Gaming Mouse", amount: 1200, url: "https://piprapayxjojo.vercel.app/pay/mouse" }
+                ]
+            },
+            ayesha: {
+                key: "ayesha",
+                storeName: "Ayesha Fashion & Boutique",
+                ownerName: "Ayesha Siddiqua",
+                ownerEmail: "ayesha@boutique.com",
+                plan: "Monthly Plan (৳100/mo)",
+                todaySales: "৳ 21,400",
+                totalSales: "৳ 94,800",
+                orderCount: "68 Orders",
+                deviceName: "Xiaomi Redmi Note 12",
+                deviceToken: "zp_token_ayesha_11092837",
+                merchantId: "MERCHANT_AYESHA_3319",
+                apiKey: "zp_live_ayesha_43891023b881231",
+                webhookUrl: "https://ayeshaboutique.com/webhooks/zinipay",
+                bkash: "01834-889900",
+                nagad: "01678-112233",
+                transactions: [
+                    { id: "7HM92KL4P", invoice: "ORD-3312", gateway: "Nagad", phone: "01923***412", amount: "৳ 3,500.00", status: "Verified", time: "6 mins ago" },
+                    { id: "BK110293P", invoice: "ORD-3311", gateway: "bKash", phone: "01755***667", amount: "৳ 1,800.00", status: "Verified", time: "45 mins ago" },
+                    { id: "NG481920B", invoice: "ORD-3310", gateway: "Nagad", phone: "01899***221", amount: "৳ 4,200.00", status: "Verified", time: "2 hours ago" },
+                    { id: "BK992018S", invoice: "ORD-3309", gateway: "bKash", phone: "01611***990", amount: "৳ 2,100.00", status: "Verified", time: "4 hours ago" }
+                ],
+                links: [
+                    { title: "Handcrafted Jamdani Saree", amount: 5500, url: "https://piprapayxjojo.vercel.app/pay/jamdani" },
+                    { title: "Designer Three Piece Set", amount: 2800, url: "https://piprapayxjojo.vercel.app/pay/threepiece" }
+                ]
+            }
+        };
+
+        // Determine current active customer
+        let activeCustomerKey = sessionStorage.getItem('zinipay_customer_key') || 'tanvir';
+        let currentCustomer = customerDatabase[activeCustomerKey] || customerDatabase.tanvir;
+
+        // Load Customer State into DOM
+        function loadCustomerView(cust) {
+            currentCustomer = cust;
+            activeCustomerKey = cust.key;
+            sessionStorage.setItem('zinipay_customer_key', cust.key);
+
+            // Update Header & Banner
+            document.getElementById('headerStoreName').textContent = cust.storeName;
+            document.getElementById('headerOwnerName').textContent = cust.ownerName;
+            document.getElementById('headerOwnerEmail').textContent = cust.ownerEmail;
+            document.getElementById('storeHeroTitle').textContent = cust.storeName;
+            document.getElementById('planBadge').textContent = cust.plan;
+
+            // Update Stats
+            document.getElementById('statTodaySales').textContent = cust.todaySales;
+            document.getElementById('statTotalSales').textContent = cust.totalSales;
+            document.getElementById('statOrderCount').textContent = cust.orderCount;
+            document.getElementById('statDeviceName').textContent = cust.deviceName;
+
+            // Update Numbers
+            document.getElementById('custBkashNumber').value = cust.bkash;
+            document.getElementById('custNagadNumber').value = cust.nagad;
+
+            // Update Devices
+            document.getElementById('deviceModelText').textContent = cust.deviceName;
+            document.getElementById('custDeviceToken').value = cust.deviceToken;
+
+            // Update API & Webhooks
+            document.getElementById('custMerchantId').value = cust.merchantId;
+            document.getElementById('custApiKey').value = cust.apiKey;
+            document.getElementById('custWebhookUrl').value = cust.webhookUrl;
+
+            // Switcher button styling
+            const btnT = document.getElementById('switchBtnTanvir');
+            const btnA = document.getElementById('switchBtnAyesha');
+            if (cust.key === 'tanvir') {
+                btnT.className = "px-2.5 py-1 rounded-xl font-bold bg-sky-600 text-white shadow";
+                btnA.className = "px-2.5 py-1 rounded-xl font-bold text-slate-400 hover:text-white";
+            } else {
+                btnA.className = "px-2.5 py-1 rounded-xl font-bold bg-sky-600 text-white shadow";
+                btnT.className = "px-2.5 py-1 rounded-xl font-bold text-slate-400 hover:text-white";
+            }
+
+            // Render Transactions
+            renderTransactions(cust.transactions);
+
+            // Render Payment Links
+            renderPaymentLinks(cust.links);
+        }
+
+        // Render Transactions Table
+        function renderTransactions(list) {
+            const tbody = document.getElementById('customerTrxBody');
+            tbody.innerHTML = '';
+            list.forEach(t => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-800/50 transition";
+                tr.innerHTML = `
+                    <td class="py-3.5 px-5 font-bold text-sky-400">${t.id}</td>
+                    <td class="py-3.5 px-4 font-sans font-medium text-white">${t.invoice}</td>
+                    <td class="py-3.5 px-4">
+                        <span class="px-2 py-0.5 rounded text-[11px] font-bold ${t.gateway === 'bKash' ? 'bg-pink-500/20 text-pink-400' : t.gateway === 'Nagad' ? 'bg-orange-500/20 text-orange-400' : 'bg-purple-500/20 text-purple-400'}">
+                            ${t.gateway}
+                        </span>
+                    </td>
+                    <td class="py-3.5 px-4 text-slate-300">${t.phone}</td>
+                    <td class="py-3.5 px-4 font-bold text-emerald-400">${t.amount}</td>
+                    <td class="py-3.5 px-4">
+                        <span class="text-emerald-400 font-bold bg-emerald-950/60 px-2 py-0.5 rounded text-[10px]">
+                            &check; ${t.status}
+                        </span>
+                    </td>
+                    <td class="py-3.5 px-5 text-right text-slate-500 text-[11px]">${t.time}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+            document.getElementById('customerTrxCount').textContent = list.length;
+        }
+
+        // Render Payment Links
+        function renderPaymentLinks(links) {
+            const grid = document.getElementById('customerLinksGrid');
+            grid.innerHTML = '';
+            links.forEach((link, idx) => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-bold text-sky-400 bg-sky-950/60 border border-sky-800 px-2 py-0.5 rounded">Payment Link #${idx + 1}</span>
+                            <span class="text-xs font-bold text-emerald-400">৳ ${link.amount.toLocaleString()}</span>
+                        </div>
+                        <h4 class="text-base font-bold text-white mt-2">${link.title}</h4>
+                        <div class="mt-2 p-2.5 bg-slate-950 rounded-xl border border-slate-800 font-mono text-[11px] text-slate-400 truncate">
+                            ${link.url}
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800 flex justify-between items-center">
+                        <button onclick="navigator.clipboard.writeText('${link.url}'); alert('Payment link copied to clipboard!');" class="text-sky-400 hover:text-sky-300 font-bold text-xs cursor-pointer">
+                            Copy Link 📋
+                        </button>
+                        <span class="text-[10px] text-slate-500">Auto Redirect Enabled</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Switch Customer View
+        function switchCustomer(key) {
+            if (customerDatabase[key]) {
+                loadCustomerView(customerDatabase[key]);
+            }
+        }
+
+        // Filter Customer Transactions
+        function filterCustomerTrx(gateway) {
+            document.querySelectorAll('.cust-filter-btn').forEach(b => {
+                b.classList.remove('bg-sky-600', 'text-white');
+                b.classList.add('bg-slate-800', 'text-slate-300');
+            });
+            event.target.classList.remove('bg-slate-800', 'text-slate-300');
+            event.target.classList.add('bg-sky-600', 'text-white');
+
+            if (gateway === 'all') {
+                renderTransactions(currentCustomer.transactions);
+            } else {
+                renderTransactions(currentCustomer.transactions.filter(t => t.gateway === gateway));
+            }
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-view').forEach(v => v.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('text-sky-400', 'border-b-2', 'border-sky-400');
+                b.classList.add('text-slate-400');
+            });
+
+            const targetView = document.getElementById('view-' + tabId);
+            const targetBtn = document.getElementById('tab-' + tabId);
+            if (targetView) targetView.classList.remove('hidden');
+            if (targetBtn) {
+                targetBtn.classList.remove('text-slate-400');
+                targetBtn.classList.add('text-sky-400', 'border-b-2', 'border-sky-400');
+            }
+        }
+
+        // Live Test Simulation: Instantly Receive a Payment into this Customer's Panel!
+        function simulateIncomingPayment() {
+            const randomTrx = "BK" + Math.floor(10000000 + Math.random() * 90000000) + "X";
+            const newTrx = {
+                id: randomTrx,
+                invoice: "INV-" + Math.floor(1000 + Math.random() * 9000),
+                gateway: "bKash",
+                phone: "017" + Math.floor(10000000 + Math.random() * 90000000).toString().substring(0, 5) + "***",
+                amount: "৳ 500.00",
+                status: "Verified",
+                time: "Just now"
+            };
+
+            currentCustomer.transactions.unshift(newTrx);
+            renderTransactions(currentCustomer.transactions);
+            alert(`🎉 Payment Verified for ${currentCustomer.storeName}!\n\nTrxID: ${randomTrx}\nAmount: ৳ 500.00 BDT\nChannel: bKash (Personal SMS Sync)\nWebhook: Sent to ${currentCustomer.webhookUrl} (200 OK)`);
+        }
+
+        // Create Payment Link
+        function openNewPaymentLinkModal() {
+            document.getElementById('newLinkModal').classList.remove('hidden');
+            document.getElementById('newLinkModal').classList.add('flex');
+        }
+        function closeNewPaymentLinkModal() {
+            document.getElementById('newLinkModal').classList.add('hidden');
+            document.getElementById('newLinkModal').classList.remove('flex');
+        }
+        function createNewPaymentLink() {
+            const title = document.getElementById('newLinkTitle').value || "Digital Item";
+            const amount = parseFloat(document.getElementById('newLinkAmount').value) || 500;
+            const newLink = {
+                title: title,
+                amount: amount,
+                url: "https://piprapayxjojo.vercel.app/pay/" + encodeURIComponent(title.toLowerCase().replace(/\s+/g, '-'))
+            };
+            currentCustomer.links.push(newLink);
+            renderPaymentLinks(currentCustomer.links);
+            closeNewPaymentLinkModal();
+            alert("New custom payment link created successfully!");
+        }
+
+        function saveNumberSettings() {
+            currentCustomer.bkash = document.getElementById('custBkashNumber').value;
+            currentCustomer.nagad = document.getElementById('custNagadNumber').value;
+            alert("Payment numbers saved! New checkouts will display these numbers to customers.");
+        }
+
+        function copyApiKey() {
+            navigator.clipboard.writeText(document.getElementById('custApiKey').value);
+            alert("API Key copied to clipboard!");
+        }
+
+        function copyToken() {
+            navigator.clipboard.writeText(document.getElementById('custDeviceToken').value);
+            alert("Device sync token copied to clipboard!");
+        }
+
+        function saveWebhookSettings() {
+            currentCustomer.webhookUrl = document.getElementById('custWebhookUrl').value;
+            alert("Webhook endpoint saved successfully!");
+        }
+
+        function testWebhook() {
+            alert(`Webhook ping dispatched to: ${currentCustomer.webhookUrl}\nHTTP 200 OK received! Payload delivered.`);
+        }
+
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        }
+
+        // Initial Load
+        loadCustomerView(currentCustomer);
+    </script>
+</body>
+</html>
